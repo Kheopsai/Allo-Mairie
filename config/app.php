@@ -105,6 +105,8 @@ return [
         ),
     ],
 
+    'domain_name' => env('DOMAIN_NAME'),
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver

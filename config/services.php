@@ -34,5 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'kheops' => [
+        'url' => env('KHEOPS_URL', null),
+        'secret' => env('KHEOPS_KEY_SECRET', null),
+        'embedding' => env('KHEOPS_EMBEDDING', null),
+    ],
 
 ];

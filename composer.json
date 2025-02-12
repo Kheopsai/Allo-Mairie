@@ -7,11 +7,23 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "bensampo/laravel-enum": "^6.11",
+        "blade-ui-kit/blade-heroicons": "^2.5",
         "laravel/framework": "^11.31",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "livewire/livewire": "^3.5",
+        "mallardduck/blade-lucide-icons": "^1.23",
+        "predis/predis": "^2.3",
+        "rappasoft/laravel-livewire-tables": "^3.6",
+        "santigarcor/laratrust": "^8.3",
+        "spatie/laravel-medialibrary": "^11.12",
+        "stancl/tenancy": "^3.8",
+        "wire-elements/modal": "^2.0",
+        "wireui/wireui": "^2.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "laradumps/laradumps": "^3.0",
         "laravel/pail": "^1.1",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",

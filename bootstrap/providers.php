@@ -2,4 +2,7 @@
 
 return [
     App\Providers\AppServiceProvider::class,
+    App\Providers\HorizonServiceProvider::class,
+    App\Providers\LlmServiceProvider::class,
+    App\Providers\TenancyServiceProvider::class,
 ];

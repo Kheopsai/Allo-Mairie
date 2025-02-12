@@ -97,6 +97,15 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'tenant' => [
+            'driver' => env('DB_CONNECTION', 'pgsql'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => '',
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
@@ -151,21 +160,41 @@ return [
         ],
 
         'default' => [
-            'url' => env('REDIS_URL'),
             'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME'),
-            'password' => env('REDIS_PASSWORD'),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_DB', '0'),
+            'password' => env('REDIS_PASSWORD', null),
+            'username' => env('REDIS_USERNAME', null),
+            'port' => env('REDIS_PORT', 6379),
+            'database' => env('REDIS_DB', 0),
+        ],
+
+        'clusters' => [
+            'default' => [
+                [
+                    'host' => env('REDIS_CLUSTER_HOST_1', '127.0.0.1'),
+                    'password' => env('REDIS_CLUSTER_PASSWORD', null),
+                    'port' => env('REDIS_CLUSTER_PORT_1', 6379),
+                    'database' => env('REDIS_CLUSTER_DB_1', 0),
+                ],
+                [
+                    'host' => env('REDIS_CLUSTER_HOST_2', '127.0.0.1'),
+                    'password' => env('REDIS_CLUSTER_PASSWORD', null),
+                    'port' => env('REDIS_CLUSTER_PORT_2', 6379),
+                    'database' => env('REDIS_CLUSTER_DB_2', 0),
+                ],
+                [
+                    'host' => env('REDIS_CLUSTER_HOST_3', '127.0.0.1'),
+                    'password' => env('REDIS_CLUSTER_PASSWORD', null),
+                    'port' => env('REDIS_CLUSTER_PORT_3', 6379),
+                    'database' => env('REDIS_CLUSTER_DB_3', 0),
+                ],
+            ],
         ],
 
         'cache' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME'),
-            'password' => env('REDIS_PASSWORD'),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '1'),
+            'host' => env('REDIS_CACHE_HOST', '127.0.0.1'),
+            'password' => env('REDIS_CACHE_PASSWORD', null),
+            'port' => env('REDIS_CACHE_PORT', 6379),
+            'database' => env('REDIS_CACHE_DB', 0),
         ],
 
     ],
