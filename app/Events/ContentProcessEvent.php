@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Events;
+
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+
+class ContentProcessEvent implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, InteractsWithSockets, Queueable, SerializesModels;
+
+    public int $id;
+
+    public int $collection;
+
+    public string $index;
+
+    public string $text;
+
+    public function __construct(int $id, int $collection, string $index, string $text)
+    {
+        $this->id = $id;
+        $this->index = $index;
+        $this->collection = $collection;
+        $this->text = $text;
+    }
+}

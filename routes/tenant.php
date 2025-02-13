@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Middleware\TenantNotFound;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
+use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
@@ -23,7 +24,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 Route::post('logout',App\Actions\Auth\Logout::class)->middleware('auth:tenant')->name('logout');
 Route::middleware([
     'web',
-    InitializeTenancyBySubdomain::class,
+    InitializeTenancyByDomainOrSubdomain::class,
     PreventAccessFromCentralDomains::class,
     TenantNotFound::class,
 ])->namespace('App\View\Pages\Tenant')->group(function () {

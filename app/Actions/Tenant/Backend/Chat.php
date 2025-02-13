@@ -33,7 +33,7 @@ class Chat
         $prompt = new TemplateMessage(self::$prompt_system,self::$prompt_user,self::$inputs);
         $systemMessagePrompt = new SystemMessagePromptTemplate($prompt->format()->generatePrompt());
 
-        return $systemMessagePrompt->format(['context'=> $context,'text'=> $text])->getContent();
+        return $systemMessagePrompt->format(['context'=> $context,'text'=> $text,'city'=> 'Nice'])->getContent();
     }
 
     private static function init(): void

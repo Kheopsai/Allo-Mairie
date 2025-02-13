@@ -33,6 +33,13 @@ return [
             'label'=>'Chat',
             'icon'=>'chat-bubble-oval-left',
             'route'=>'chat.index'
+        ],
+        'Data Base'=>[
+            [
+                'label'=> 'DataBase',
+                'icon'=> 'circle-stack',
+                'route' => 'source.index'
+            ]
         ]
     ]
 ];

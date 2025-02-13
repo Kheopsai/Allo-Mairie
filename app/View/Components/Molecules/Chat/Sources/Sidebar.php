@@ -16,7 +16,9 @@ class Sidebar extends Component
 
     public $channels = [];
 
-    public function mount() {}
+    public function mount() {
+        $this->loadChannels();
+    }
 
     public function loadChannels()
     {

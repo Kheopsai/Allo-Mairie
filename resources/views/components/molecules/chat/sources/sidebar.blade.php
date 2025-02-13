@@ -14,7 +14,7 @@
         </div>
     </div>
     <div>
-        <ul class="space-y-2">
+        <ul class="space-y-2" x-show="open">
             <div class="overflow-y-auto space-y-4 max-h-[85vh] soft-scrollbar p-4">
                 @forelse ($channels as $channel)
                     <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm">

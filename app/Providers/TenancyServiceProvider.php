@@ -16,9 +16,7 @@ use Stancl\Tenancy\Jobs;
 use Stancl\Tenancy\Listeners;
 use Stancl\Tenancy\Listeners\UpdateSyncedResource;
 use Stancl\Tenancy\Middleware;
-use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
-use Stancl\Tenancy\Middleware\InitializeTenancyBySubdomain;
 
 class TenancyServiceProvider extends ServiceProvider
 {
@@ -177,7 +175,7 @@ class TenancyServiceProvider extends ServiceProvider
                 ->middleware(
                     'web',
                     'universal',
-                    InitializeTenancyBySubdomain::class
+                    InitializeTenancyByDomainOrSubdomain::class
                 );
         });
     }
