@@ -11,7 +11,6 @@ export default {
         "./vendor/wireui/wireui/ts/**/*.ts",
         "./vendor/wireui/wireui/src/WireUi/**/*.php",
         "./vendor/wireui/wireui/src/Components/**/*.php",
-        './storage/framework/views/*.php',
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
@@ -43,11 +42,14 @@ export default {
             },
         },
     },
-    safelist: [
-        {
-            pattern: /max-w-(sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl)/,
-            variants: ["sm", "md", "lg", "xl", "2xl"],
-        },
+
+    plugins: [
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography"),
+        require('@tailwindcss/aspect-ratio'),
+        require('flowbite/plugin'),
     ],
-    plugins: [],
+    presets: [
+        require("./vendor/wireui/wireui/tailwind.config.js")
+    ],
 };

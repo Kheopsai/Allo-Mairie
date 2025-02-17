@@ -57,7 +57,7 @@ class Create extends ModalComponent
     #[Validate('sometimes','url')]
     public $url;
 
-    public function boot()
+    public function boot(): void
     {
         $this->summaryExractor = new SummaryExtractor;
         $this->textExtractor = new TextExtractor;
@@ -70,7 +70,7 @@ class Create extends ModalComponent
         return '2xl';
     }
 
-    public function setValue($value)
+    public function setValue($value): void
     {
         $this->value = $value;
         $this->step = 2;
@@ -215,12 +215,9 @@ class Create extends ModalComponent
         );
     }
 
-    public function addToRessources($source)
+    public function addToRessources($source): void
     {
-
         $source->addFile($this->file)->in('tmp')->on('local')->save();
-
-        // ProcessDocumentJob::dispatch(tenant(), $source);
         DocumentProcessEvent::dispatch(tenant(),$source);
     }
 
