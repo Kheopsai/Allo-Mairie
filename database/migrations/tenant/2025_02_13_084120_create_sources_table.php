@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('content')->nullable();
+            $table->longText('content')->nullable();
             $table->enum('status', StatusEnum::asArray())->default(StatusEnum::PENDING);
             $table->enum('type', SourceEnum::getValues())->default(SourceEnum::Text);
             $table->string('job_batch_id')->nullable();

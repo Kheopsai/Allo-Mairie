@@ -25,6 +25,6 @@ class PostgresVector implements VectorStorageInterface
 
     public function save($params):void
     {
-        $this->model->vectorStores()->saves($params);
+        $this->model->vectorStores()->save($params);
     }
 }

@@ -5,6 +5,8 @@ namespace App\View\Modal\Tenant\Backend\Source;
 use App\Actions\Tenant\Backend\Tags;
 use App\Enums\SourceEnum;
 use App\Events\ContentProcessEvent;
+use App\Events\Documents\DocumentProcessEvent;
+use App\Events\ScrapperProcessEvent;
 use App\Jobs\Sources\ProcessDocumentJob;
 use App\Models\Source;
 use App\Responses\HuggingFace\HuggingFaceResponse;
@@ -32,6 +34,7 @@ class Create extends ModalComponent
 
     public $file;
 
+
     public bool $loadContent = true;
 
     public $tags = [];
@@ -47,8 +50,12 @@ class Create extends ModalComponent
     #[Validate('required|min:3')]
     public $name;
 
-    #[Validate(['string', 'required', "min:3"])]
+    // #[Validate(['sometimes','string',"min:3"])]
     public $content;
+
+
+    #[Validate('sometimes','url')]
+    public $url;
 
     public function boot()
     {
@@ -115,9 +122,9 @@ class Create extends ModalComponent
     public function validateFile(): void
     {
         if ($this->file) {
-            // $this->validate([
-            //     'file' => ['required', 'file', new PageCountRule(10)],
-            // ]);
+            $this->validate([
+                'file' => ['required', 'file'],
+            ]);
         }
     }
 
@@ -126,7 +133,7 @@ class Create extends ModalComponent
      */
     public function getSummarize($context): void
     {
-        $prompt = $this->summaryExtractor->handle($context);
+        $prompt = $this->summaryExractor->handle($context);
         $this->content = $this->getResponse($prompt, 100);
     }
 
@@ -177,7 +184,7 @@ class Create extends ModalComponent
         return $response->getGeneratedText();
     }
 
-        public function save(): void
+    public function save(): void
     {
         $this->validate();
         $this->validateFile();
@@ -185,28 +192,20 @@ class Create extends ModalComponent
         $source->name = $this->name;
         $source->content = $this->content;
         $source->user_id = Auth::id();
+        $source->type= $this->value;
         $source->save();
         $source->syncTags($this->tags);
-        if ($this->file) {
-            $this->file = $this->file->getRealPath();
-            // $beforeCommit = function ($name) use ($source) {
-            //     $source->update(['job_batch_id' => $name]);
-            // };
-            // $failedCommit = function () use ($source) {
-            //     $this->updateHubStatus($source->id, StatusType::ERROR);
-            // };
-            // $finalCallback = function () use ($source) {
-            //     $this->updateHubStatus($source->id, StatusType::SUCCESS);
-            // };
-            // event(
-            //     new DocumentProcessEvent(
-
-            //         provider: VectorStoreEnum::Postgres
-            //     )
-            // );
-            $this->addToRessources();
-        } else {
-            ContentProcessEvent::dispatch($source->id, $this->directory->id, tenant()->id, $this->content);
+        switch ($this->value) {
+            case 'file':
+                $this->file = $this->file->getRealPath();
+                $this->addToRessources($source);
+                break;
+            case 'text':
+                ContentProcessEvent::dispatch($source->id, tenant()->id, $this->content);
+                break;
+            case 'url':
+                ScrapperProcessEvent::dispatch($source->id,$this->url);
+                break;
         }
         $this->dispatch('refreshDatatable');
         $this->closeModal();
@@ -216,22 +215,13 @@ class Create extends ModalComponent
         );
     }
 
-        public function addToRessources()
+    public function addToRessources($source)
     {
-
-
-        $source = Source::create([
-            'id' => (string) Str::uuid(),
-            'type' => SourceEnum::File,
-            'label' => $this->name,
-            'context' => '',
-            'job_batch_id' => null,
-        ]);
 
         $source->addFile($this->file)->in('tmp')->on('local')->save();
 
-        ProcessDocumentJob::dispatch(tenant(), $source);
-
+        // ProcessDocumentJob::dispatch(tenant(), $source);
+        DocumentProcessEvent::dispatch(tenant(),$source);
     }
 
     public function render()

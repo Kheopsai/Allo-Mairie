@@ -77,13 +77,14 @@ class DocumentsProcessListener implements ShouldQueue
      */
     public function getFile(Model $model): string
     {
-        $disk = getenv('FILE_TMP');
-        $filePath = $model->file->filepath;
-        if (! Storage::disk($disk)->exists($filePath)) {
-            throw new Exception("File does not exist on disk: {$disk}, path: {$filePath}");
-        }
+        // $disk = config('filesystems.default');
+        // $filePath = $model->file->filepath;
+        // if (! Storage::disk($disk)->exists($filePath)) {
+        //     throw new Exception("File does not exist on disk: {$disk}, path: {$filePath}");
+        // }
 
-        return Storage::disk($disk)->path($filePath);
+        // return Storage::disk($disk)->path($filePath);
+        return storage_path('app/'.$model->file->filepath);
     }
 
     /**

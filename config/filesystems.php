@@ -41,11 +41,30 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
         ],
+
+
+        'tenants' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+        // 'tenants' => [
+        //     'driver' => 's3',
+        //     'key' => env('SCALEWAY_ACCESS_KEY_ID'),
+        //     'secret' => env('SCALEWAY_SECRET_ACCESS_KEY'),
+        //     'region' => env('SCALEWAY_REGION', 'fr-par'),
+        //     'bucket' => env('SCALEWAY_BUCKET'),
+        //     'endpoint' => env('SCALEWAY_ENDPOINT', 'https://s3.fr-par.scw.cloud'),
+        //     'throw' => true,
+        // ],
 
         's3' => [
             'driver' => 's3',

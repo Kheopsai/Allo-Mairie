@@ -59,7 +59,7 @@ class ProcessDocumentJob implements ShouldQueue
             Bus::batch($jobs)
                 ->name('Process Document Splits for Source '.$sourceId)
                 ->then(function (BusBatch $batch) use ($context) {
-                    $this->source->update(['context' => $context, 'job_batch_id' => $batch->id]);
+                    $this->source->update(['content' => $context, 'job_batch_id' => $batch->id]);
                     Log::info('Batch started successfully', ['batch_id' => $batch->id]);
                 })
                 ->catch(function (BusBatch $batch, Throwable $e) {

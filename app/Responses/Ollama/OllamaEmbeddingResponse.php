@@ -25,7 +25,7 @@ class OllamaEmbeddingResponse
         try {
             $response = $this->connection->send($this->request)->body();
             $embedding= json_decode($response,true);
-            return $embedding['embedding'][0];
+            return $embedding['embeddings'][0];
         } catch (Exception $e) {
             throw new Exception('An error occurred while retrieving generated text: '.$e->getMessage());
         }

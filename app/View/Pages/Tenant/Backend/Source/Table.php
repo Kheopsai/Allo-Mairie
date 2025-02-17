@@ -6,12 +6,12 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Source;
 use App\Traits\HasActionResource;
-use Rappasoft\LaravelLivewireTables\Views\Traits\Core\HasWireActions;
+use WireUi\Traits\WireUiActions;
 
 class Table extends DataTableComponent
 {
 
-    use HasWireActions;
+    use WireUiActions;
     use HasActionResource;
 
     protected $model = Source::class;

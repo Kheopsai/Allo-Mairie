@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Chats;
 
-use App\Facade\VectorStoreFacade;
+use App\Services\VectorStores\PostgresVectorStore;
 use Exception;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -34,7 +34,8 @@ class ProcessDocumentSplitJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $vectorStore = VectorStoreFacade::build($this->provider)->init($this->params);
+        $vectorStore = new PostgresVectorStore;
+        $vectorStore->init($this->params);
         $vectorStore->addText($this->text);
     }
 }

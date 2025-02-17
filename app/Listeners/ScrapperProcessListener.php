@@ -3,27 +3,25 @@
 namespace App\Listeners;
 
 use App\Enums\StatusEnum;
-use App\Events\ContentProcessEvent;
+use App\Events\ScrapperProcessEvent;
 use App\Models\Source;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Services\Scrapper\Scrapper;
 use App\Services\TextSplitter\TextSplit;
 use App\Services\VectorStores\PostgresVectorStore;
-use Exception;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Throwable;
 
-class ContentProcessListener implements ShouldQueue
+class ScrapperProcessListener implements ShouldQueue
 {
+
     use Dispatchable, InteractsWithQueue, InteractsWithSockets, Queueable, SerializesModels;
 
+    public TextSplit $textSplit;
     public PostgresVectorStore $vectorStore;
-
-    protected TextSplit $textSplit;
-
     /**
      * Create the event listener.
      */
@@ -35,15 +33,14 @@ class ContentProcessListener implements ShouldQueue
 
     /**
      * Handle the event.
-     *
-     * @throws Exception
      */
-    public function handle(ContentProcessEvent $event): void
+    public function handle(ScrapperProcessEvent $event): void
     {
-        $id = $event->id;
-        $text = $event->text;
+        $id= $event->id;
 
-        $splits = $this->textSplit->handle($text);
+        $scrapper = new Scrapper($event->url);
+        $content = $scrapper->handle();
+        $splits = $this->textSplit->handle($content);
 
         foreach ($splits as $split) {
             $this->vectorStore->init(['id' => $id,'model'=> Source::find($id)]);
@@ -52,9 +49,10 @@ class ContentProcessListener implements ShouldQueue
         }
     }
 
-    public function failed(ContentProcessEvent $event, Throwable $exception): void
-    {
-        $id = $event->id;
-        Source::findOrFail($id)->update(['status' => StatusEnum::ERROR]);
-    }
+
+    // public function failed(ScrapperProcessEvent $event, Throwable $exception): void
+    // {
+    //     $id = $event->id;
+    //     Source::findOrFail($id)->update(['status' => StatusEnum::ERROR]);
+    // }
 }

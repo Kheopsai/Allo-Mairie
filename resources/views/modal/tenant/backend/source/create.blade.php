@@ -1,4 +1,4 @@
-<x-card title="{{ __('Add resources') }}">
+<x-card title="{{ __('Add resources') }}" class="py-5">
     <x-slot name="action">
         <x-button icon="x-mark" flat wire:click="$dispatch('closeModal')"/>
     </x-slot>
@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-6">
+            <div class="grid grid-cols-3 gap-6">
                 <div :class="{ 'border-primary-500 bg-primary-100': value == 'text' }"
                      class="border border-gray-300 cursor-pointer rounded-xl">
                     <div class="flex justify-center px-2 py-4 rounded-t-lg item-center" wire:click="setValue('text')">
@@ -46,6 +46,22 @@
                             </div>
                             <div class="flex justify-center text-xs text-center">
                                 {{ __('pdf, doc, txt') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div :class="{ 'border-primary-500 bg-primary-100': value == 'url' }"
+                     class="border border-gray-300 cursor-pointer rounded-xl">
+                    <div class="flex justify-center px-2 py-4 rounded-t-lg item-center" wire:click="setValue('url')">
+                        <div class="space-y-1">
+                            <div class="flex justify-center">
+                                <x-heroicon-o-link class="flex-shrink-0 w-5 h-5"/>
+                            </div>
+                            <div class="flex justify-center">
+                                <span class="text-base font-medium">{{ __('From  Website') }}</span>
+                            </div>
+                            <div class="flex justify-center text-xs text-center">
+                                {{ __('Extract content from a website') }}
                             </div>
                         </div>
                     </div>
@@ -81,17 +97,24 @@
                     <x-atoms.error name="file"/>
                 </div>
             @endif
+            @if ($value == 'url')
+
+                <x-input class="w-full" icon="link" placeholder="{{ __('https://example.com') }}"
+                                label="{{ __('Name') }}" wire:model.blur='url'/>
+            @endif
             <div>
-                <x-input class="w-full" placeholder="{{ __('e.g  Social media voice') }}"
+                <x-input class="w-full" placeholder="{{ __('Name') }}"
                                 label="{{ __('Name') }}" wire:model.blur='name'/>
             </div>
+            @if($value=='text')
             <div class="relative">
                 <div class="absolute left-1">
                     <x-atoms.spinner spinner="getContentAndTags"/>
                 </div>
-                {{-- <x-textarea :disabled="!$loadContent" primary wire:model.blur="content"
-                                   class="resize-none rounded-xl "></x-textarea> --}}
+                <x-textarea :disabled="!$loadContent" primary wire:model.blur="content"
+                                   class="resize-none rounded-xl "></x-textarea>
             </div>
+            @endif
             <div class="flex items-end space-x-5">
                 <x-checkbox md primary/>
                 <p class=" text-xs text-gray-700 md:max-w-6xl md:mx-auto sm:mt-6 font-pj">

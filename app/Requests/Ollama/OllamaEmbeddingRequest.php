@@ -2,11 +2,15 @@
 
 namespace App\Requests\Ollama;
 
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
-class OllamaEmbeddingRequest extends Request
+class OllamaEmbeddingRequest extends Request implements HasBody
 {
+    use HasJsonBody;
+
     public Method $method = Method::POST;
 
 

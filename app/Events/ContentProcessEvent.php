@@ -15,17 +15,15 @@ class ContentProcessEvent implements ShouldQueue
 
     public int $id;
 
-    public int $collection;
 
     public string $index;
 
     public string $text;
 
-    public function __construct(int $id, int $collection, string $index, string $text)
+    public function __construct(int $id, string $index, string $text)
     {
         $this->id = $id;
         $this->index = $index;
-        $this->collection = $collection;
         $this->text = $text;
     }
 }

@@ -7,12 +7,16 @@ use App\Enums\SenderEnum;
 use App\Events\Extractors\SummaryExtractorEvent;
 use App\Models\Channel;
 use App\Models\Chat;
+use App\Models\VectorStore;
+use App\Services\Context\ContextService;
+use App\Services\Embeddings\Embedding;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
+use Pgvector\Laravel\Distance;
 
 trait HasChat
 {
@@ -157,7 +161,13 @@ trait HasChat
      */
     public function buildContext(): void
     {
-        $this->generatedMessage = \App\Actions\Tenant\Backend\Chat::handleStatic($this->message);
+        $embedding = Embedding::handle($this->message);
+
+        $contexts = VectorStore::query()->nearestNeighbors('embedding', $embedding, Distance::Cosine)->get()->toArray();
+
+        $contextService = new ContextService($this->message, $contexts);
+        $context = $contextService->search()->rerank()->pluck('text')->concatenateContextsWithLimit();
+        $this->generatedMessage = \App\Actions\Tenant\Backend\Chat::handleStatic($this->message,$context);
         $this->reset('message');
     }
 
@@ -165,6 +175,7 @@ trait HasChat
     private function dispatchSummaryExtractor($message): void
     {
         if (! empty($this->channel)) {
+
             if (Channel::find($this->channel)) {
                 SummaryExtractorEvent::dispatch(Channel::find($this->channel), $message, 'name');
             }
