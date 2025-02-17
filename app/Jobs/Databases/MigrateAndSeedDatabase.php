@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Schema;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\CentralConnection;
 use Stancl\Tenancy\Events\DatabaseMigrated;
+use Stancl\Tenancy\Exceptions\DatabaseManagerNotRegisteredException;
 use Throwable;
 
 class MigrateAndSeedDatabase implements ShouldBeUnique, ShouldQueue
@@ -36,6 +37,7 @@ class MigrateAndSeedDatabase implements ShouldBeUnique, ShouldQueue
 
     /**
      * Execute the job.
+     * @throws Throwable
      */
     public function handle(): void
     {

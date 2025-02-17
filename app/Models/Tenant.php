@@ -9,6 +9,10 @@ use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDomains;
 
+/**
+ * @method static whereHas(string $string, \Closure $param)
+ * @method static create(array $array)
+ */
 class Tenant extends BaseTenant  implements TenantWithDatabase
 {
     use HasDomains,HasDatabase;

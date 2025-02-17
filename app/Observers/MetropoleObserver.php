@@ -13,10 +13,6 @@ class MetropoleObserver
      */
     public function created(Metropole $metropole): void
     {
-        // $tenant = new Tenant();
-        // $tenant->id=Str::uuid7()->toString();
-        // $tenant->metropole_id= $metropole->id;
-        // $tenant->save();
         $tenant = Tenant::create([
             'id' => Str::uuid7()->toString(),
             'metropole_id' => $metropole->id,

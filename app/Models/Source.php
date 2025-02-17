@@ -10,6 +10,13 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
 
+/**
+ * @property mixed $id
+ * @property mixed $type
+ * @property int|mixed|string|null $user_id
+ * @property mixed $content
+ * @property mixed $name
+ */
 class Source extends Model implements HasMedia
 {
     use HasVectorStore;
