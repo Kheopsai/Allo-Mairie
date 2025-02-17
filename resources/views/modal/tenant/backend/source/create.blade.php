@@ -108,9 +108,9 @@
             </div>
             @if($value=='text')
             <div class="relative">
-                <div class="absolute left-1">
+                {{-- <div class="absolute left-1">
                     <x-atoms.spinner spinner="getContentAndTags"/>
-                </div>
+                </div> --}}
                 <x-textarea :disabled="!$loadContent" primary wire:model.blur="content"
                                    class="resize-none rounded-xl "></x-textarea>
             </div>

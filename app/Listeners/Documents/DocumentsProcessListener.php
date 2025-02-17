@@ -4,7 +4,12 @@ namespace App\Listeners\Documents;
 
 use App\Events\Documents\DocumentProcessEvent;
 use App\Handlers\DocumentProcessingHandler;
+use App\Models\Source;
+use App\Responses\HuggingFace\HuggingFaceResponse;
 use App\Serializers\ClosureSerializer;
+use App\Services\Documents\TextExtractor;
+use App\Services\Extractors\SummaryExtractor;
+use AssistedMindfulness\Rake\Rake;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,6 +37,7 @@ class DocumentsProcessListener implements ShouldQueue
         try {
 
             $data = $this->prepareData($event);
+            $this->getContentAndTags($source);
 
             $beforeCommit = function (string $name) use ($source): void {
                 $source->update(['job_batch_id' => $name]);
@@ -54,7 +60,7 @@ class DocumentsProcessListener implements ShouldQueue
                 );
             }
         } catch (Throwable $e) {
-            Log::error('Document Processing Error: '.$e->getMessage());
+            Log::error('Document Processing Error: ' . $e->getMessage());
             throw $e;
         }
     }
@@ -84,7 +90,70 @@ class DocumentsProcessListener implements ShouldQueue
         // }
 
         // return Storage::disk($disk)->path($filePath);
-        return storage_path('app/'.$model->file->filepath);
+        return storage_path('app/' . $model->file->filepath);
+    }
+
+    public function getContentAndTags($source)
+    {
+        $textExtractor = new TextExtractor;
+        $content = $textExtractor->extractText($this->getFile($source));
+        $stupidContext = $this->generateContent($content);
+        $tags=$this->getTags($stupidContext);
+        $source->syncTags($tags);
+        $summary= $this->getSummarize($stupidContext);
+        $source->update(['content'=> $summary]);
+    }
+
+
+    public function getSummarize($context)
+    {
+        $summaryExractor = new SummaryExtractor;
+        $prompt = $summaryExractor->handle($context);
+        return $this->getResponse($prompt, 100);
+    }
+
+
+    public function getResponse($prompt, $token = 300): string
+    {
+        $response = new HuggingFaceResponse($prompt, $token);
+
+        return $response->getGeneratedText();
+    }
+
+
+    public function getTags($context)
+    {
+        $rake = new Rake(4, false);
+        return $rake->extract($context)->sortByScore('desc')->keywords();
+    }
+
+
+    public function estimateTokenCount($text): float
+    {
+        return ceil(strlen($text) / 2);
+    }
+
+    public function concatenateContextsWithLimit(array $contexts, $maxTokens = 4700): string
+    {
+        $concatenatedContext = '';
+        $currentTokenCount = 0;
+        foreach ($contexts as $context) {
+            $context = preg_replace('/\s+/', ' ', trim($context));
+            $contextTokenCount = $this->estimateTokenCount($context);
+            if ($currentTokenCount + $contextTokenCount > $maxTokens) {
+                break;
+            }
+
+            $concatenatedContext .= $context . "\n";
+            $currentTokenCount += $contextTokenCount;
+        }
+
+        return trim($concatenatedContext);
+    }
+
+    public function generateContent($content): string
+    {
+        return $this->concatenateContextsWithLimit($content);
     }
 
     /**

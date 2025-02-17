@@ -29,7 +29,6 @@ class HuggingFaceResponse
         try {
             $responseBody = $this->connection->send($this->request)->body();
             $decodedResponse = json_decode($responseBody, true);
-
             if (json_last_error() === JSON_ERROR_NONE) {
                 if (isset($decodedResponse[0]['generated_text'])) {
                     return $decodedResponse[0]['generated_text'];
