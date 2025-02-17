@@ -92,4 +92,9 @@ class SyncedUser extends Authenticatable implements LaratrustUser, Syncable
     {
         return $this->hasMany(Channel::class);
     }
+
+    public function hubs():HasMany
+    {
+        return $this->hasMany(Hub::class);
+    }
 }

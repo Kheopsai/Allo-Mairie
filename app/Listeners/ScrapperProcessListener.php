@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Actions\Tenant\Backend\Tags;
 use App\Enums\StatusEnum;
 use App\Events\ScrapperProcessEvent;
+use App\Facade\LlmManagerFacade;
 use App\Models\Source;
 use App\Parsers\HtmlToText;
 use App\Responses\HuggingFace\HuggingFaceResponse;
@@ -58,7 +59,7 @@ class ScrapperProcessListener implements ShouldQueue
             Source::findOrFail($id)->update(['status' => StatusEnum::SUCCESS]);
         }
 
-        // $this->getContentAndTags($id,$content);
+        $this->getContentAndTags($id,$content);
     }
 
     public function getContentAndTags($id,$content)
@@ -66,10 +67,8 @@ class ScrapperProcessListener implements ShouldQueue
 
         $source = Source::findOrFail($id);
         $tags=$this->getTags($content);
-        ds($content);
         $source->syncTags($tags);
         $summary= $this->getSummarize($content);
-        ds($summary);
         $source->update(['content'=> $summary]);
     }
 
@@ -113,9 +112,9 @@ class ScrapperProcessListener implements ShouldQueue
 
     public function getResponse($prompt, $token = 300): string
     {
-        $response = new HuggingFaceResponse($prompt, $token);
+        $response = LlmManagerFacade::build(config('llm.config'));
 
-        return $response->getGeneratedText();
+        return $response->getResponse($prompt);
     }
 
     public function getTags($context)

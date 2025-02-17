@@ -3,6 +3,7 @@
 namespace App\Listeners\Documents;
 
 use App\Events\Documents\DocumentProcessEvent;
+use App\Facade\LlmManagerFacade;
 use App\Handlers\DocumentProcessingHandler;
 use App\Models\Source;
 use App\Responses\HuggingFace\HuggingFaceResponse;
@@ -115,9 +116,9 @@ class DocumentsProcessListener implements ShouldQueue
 
     public function getResponse($prompt, $token = 300): string
     {
-        $response = new HuggingFaceResponse($prompt, $token);
+        $response =  LlmManagerFacade::build(config('llm.config'));
 
-        return $response->getGeneratedText();
+        return $response->getResponse($prompt);
     }
 
 

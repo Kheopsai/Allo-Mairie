@@ -145,7 +145,7 @@
             <div class="bg-white rounded-full border border-secondary-200 shadow-sm flex-1 peer">
                 <div class="px-3 flex justify-center">
                     <textarea @disabled($editable)
-                        class="peer resize-none border-none rounded-none shadow-none focus:outline-none focus:!ring-0 w-full bg-transparent max-h-10 soft-scrollbar text-sm"
+                        class="peer resize-none border-none rounded-none shadow-none focus:outline-none focus:!ring-0 w-full bg-transparent max-h-10 soft-scrollbar text-sm py-2"
                         rows="2" wire:model.live="message" wire:keydown.enter="create()"
                         @keydown.enter.prevent="if ($event.shiftKey) content += '\n'"></textarea>
                 </div>

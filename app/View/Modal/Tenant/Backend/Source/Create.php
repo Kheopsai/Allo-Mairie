@@ -7,6 +7,7 @@ use App\Enums\SourceEnum;
 use App\Events\ContentProcessEvent;
 use App\Events\Documents\DocumentProcessEvent;
 use App\Events\ScrapperProcessEvent;
+use App\Facade\LlmManagerFacade;
 use App\Jobs\Sources\ProcessDocumentJob;
 use App\Models\Source;
 use App\Responses\HuggingFace\HuggingFaceResponse;
@@ -179,7 +180,7 @@ class Create extends ModalComponent
      */
     public function getResponse($prompt, $token = 300): string
     {
-        $response = new HuggingFaceResponse($prompt, $token);
+        $response =  LlmManagerFacade::build('mistral');
 
         return $response->getGeneratedText();
     }
