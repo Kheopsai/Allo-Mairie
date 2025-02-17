@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property mixed $name
+ * @property mixed $id
+ */
 #[ObservedBy(MetropoleObserver::class)]
 class Metropole extends Model
 {
