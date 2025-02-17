@@ -20,11 +20,11 @@ class Table extends DataTableComponent
     public function actions(): array
     {
         return [
-            [
-                'label' => trans('Edit'),
-                'icon' => 'pencil',
-                'action' => 'edit',
-            ],
+            // [
+            //     'label' => trans('Edit'),
+            //     'icon' => 'pencil',
+            //     'action' => 'edit',
+            // ],
             [
                 'label' => trans('Delete'),
                 'icon' => 'trash',

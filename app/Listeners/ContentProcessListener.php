@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Actions\Tenant\Backend\Tags;
 use App\Enums\StatusEnum;
 use App\Events\ContentProcessEvent;
 use App\Models\Source;
@@ -9,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Services\TextSplitter\TextSplit;
 use App\Services\VectorStores\PostgresVectorStore;
+use AssistedMindfulness\Rake\Rake;
 use Exception;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Bus\Queueable;
@@ -24,6 +26,8 @@ class ContentProcessListener implements ShouldQueue
 
     protected TextSplit $textSplit;
 
+    protected Tags $tagExtractor;
+
     /**
      * Create the event listener.
      */
@@ -31,6 +35,7 @@ class ContentProcessListener implements ShouldQueue
     {
         $this->textSplit = new TextSplit;
         $this->vectorStore = new PostgresVectorStore;
+        $this->tagExtractor = new Tags;
     }
 
     /**
@@ -50,6 +55,15 @@ class ContentProcessListener implements ShouldQueue
             $this->vectorStore->addText($split);
             Source::findOrFail($id)->update(['status' => StatusEnum::SUCCESS]);
         }
+        $tags=$this->getTags($this->tagExtractor->handle($text));
+        Source::findOrFail($id)->syncTags($tags);
+    }
+
+
+    public function getTags($context)
+    {
+        $rake = new Rake(4, false);
+        return $rake->extract($context)->sortByScore('desc')->keywords();
     }
 
     public function failed(ContentProcessEvent $event, Throwable $exception): void

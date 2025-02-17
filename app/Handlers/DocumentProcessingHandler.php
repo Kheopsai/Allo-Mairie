@@ -2,11 +2,13 @@
 
 namespace App\Handlers;
 
+use App\Actions\Tenant\Backend\Tags;
 use App\Interface\ActionHandlerInterface;
 use App\Enums\VectorStoreEnum;
 use App\Jobs\Chats\ProcessDocumentSplitJob;
 use App\Serializers\ClosureSerializer;
 use App\Services\TextSplitter\TextSplit;
+use AssistedMindfulness\Rake\Rake;
 use Closure;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Str;
@@ -18,10 +20,13 @@ class DocumentProcessingHandler implements ActionHandlerInterface
 
     protected string $provider;
 
+    protected Tags $tagExtractor;
+
     public function __construct(string $provider = VectorStoreEnum::Postgres)
     {
         $this->textSplit = new TextSplit;
         $this->provider = $provider;
+        $this->tagExtractor= new Tags;
     }
 
     public function validate($data): bool
@@ -81,6 +86,11 @@ class DocumentProcessingHandler implements ActionHandlerInterface
         return true;
     }
 
+    public function getTags($context)
+    {
+        $rake = new Rake(4, false);
+        return $rake->extract($context)->sortByScore('desc')->keywords();
+    }
     public function unserialize($closure): Closure
     {
         return ClosureSerializer::unserialize($closure);
