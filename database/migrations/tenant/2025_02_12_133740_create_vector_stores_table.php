@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->vector('embedding');
             $table->text('text');
-            $table->string('vectorable_id');
+            $table->unsignedBigInteger('vectorable_id');
             $table->string('vectorable_type');
             $table->timestamps();
         });

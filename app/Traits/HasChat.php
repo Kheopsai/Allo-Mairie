@@ -168,7 +168,7 @@ trait HasChat
         $hub_id = CategoriesExtraction::run($this->message);
 
         if ($hub_id)
-            $context = Hub::findOrFail($hub_id)->vectorStores()->nearestNeighbors('embedding', $embedding, Distance::Cosine)->get()->toArray();
+            $contexts = Hub::findOrFail($hub_id)->vectorStores()->nearestNeighbors('embedding', $embedding, Distance::Cosine)->get()->toArray();
         else
             $contexts = [];
 

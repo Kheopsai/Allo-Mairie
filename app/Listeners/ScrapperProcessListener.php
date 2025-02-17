@@ -64,13 +64,13 @@ class ScrapperProcessListener implements ShouldQueue
     }
 
 
-    public function getHub($id, $content)
+    public function getHub($source)
     {
-        if (!Source::findOrFail($id)->hub_id) {
+        if (!$source->hub_id) {
 
-            $hub_id = CategoriesExtraction::run($content);
+            $hub_id = CategoriesExtraction::run($source->content);
             if($hub_id)
-            Source::findOrFail($id)->update(['hub_id'=> $hub_id]);
+            $source->update(['hub_id'=> $hub_id]);
         }
     }
 
@@ -82,6 +82,7 @@ class ScrapperProcessListener implements ShouldQueue
         $source->syncTags($tags);
         $summary= $this->getSummarize($content);
         $source->update(['content'=> $summary]);
+        $this->getHub($source);
     }
 
 
