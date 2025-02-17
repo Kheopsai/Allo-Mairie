@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('job_batch_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('hub_id')->nullable();
+            $table->foreign('hub_id')->references('id')->on('hubs')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

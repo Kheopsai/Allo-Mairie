@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Actions\Tenant\Backend\CategoriesExtraction;
 use App\Actions\Tenant\Backend\Tags;
 use App\Enums\StatusEnum;
 use App\Events\ScrapperProcessEvent;
@@ -60,6 +61,17 @@ class ScrapperProcessListener implements ShouldQueue
         }
 
         $this->getContentAndTags($id,$content);
+    }
+
+
+    public function getHub($id, $content)
+    {
+        if (!Source::findOrFail($id)->hub_id) {
+
+            $hub_id = CategoriesExtraction::run($content);
+            if($hub_id)
+            Source::findOrFail($id)->update(['hub_id'=> $hub_id]);
+        }
     }
 
     public function getContentAndTags($id,$content)

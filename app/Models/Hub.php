@@ -17,7 +17,8 @@ class Hub extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(SyncedUser::class);
+        return $this->belongsTo(SyncedUser::class,'user_id');
+
     }
 
     public function sources():HasMany

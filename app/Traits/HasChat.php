@@ -2,11 +2,13 @@
 
 namespace App\Traits;
 
+use App\Actions\Tenant\Backend\CategoriesExtraction;
 use App\Enums\ChatType;
 use App\Enums\SenderEnum;
 use App\Events\Extractors\SummaryExtractorEvent;
 use App\Models\Channel;
 use App\Models\Chat;
+use App\Models\Hub;
 use App\Models\VectorStore;
 use App\Services\Context\ContextService;
 use App\Services\Embeddings\Embedding;
@@ -163,11 +165,16 @@ trait HasChat
     {
         $embedding = Embedding::handle($this->message);
 
-        $contexts = VectorStore::query()->nearestNeighbors('embedding', $embedding, Distance::Cosine)->get()->toArray();
+        $hub_id = CategoriesExtraction::run($this->message);
+
+        if ($hub_id)
+            $context = Hub::findOrFail($hub_id)->vectorStores()->nearestNeighbors('embedding', $embedding, Distance::Cosine)->get()->toArray();
+        else
+            $contexts = [];
 
         $contextService = new ContextService($this->message, $contexts);
         $context = $contextService->search()->rerank()->pluck('text')->concatenateContextsWithLimit();
-        $this->generatedMessage = \App\Actions\Tenant\Backend\Chat::handleStatic($this->message,$context);
+        $this->generatedMessage = \App\Actions\Tenant\Backend\Chat::handleStatic($this->message, $context);
         $this->reset('message');
     }
 

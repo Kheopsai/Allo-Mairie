@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Documents;
 
+use App\Actions\Tenant\Backend\CategoriesExtraction;
 use App\Events\Documents\DocumentProcessEvent;
 use App\Facade\LlmManagerFacade;
 use App\Handlers\DocumentProcessingHandler;
@@ -103,6 +104,7 @@ class DocumentsProcessListener implements ShouldQueue
         $source->syncTags($tags);
         $summary= $this->getSummarize($stupidContext);
         $source->update(['content'=> $summary]);
+        $this->getHub($source);
     }
 
 
@@ -111,6 +113,17 @@ class DocumentsProcessListener implements ShouldQueue
         $summaryExractor = new SummaryExtractor;
         $prompt = $summaryExractor->handle($context);
         return $this->getResponse($prompt, 100);
+    }
+
+
+    public function getHub($source)
+    {
+        if (!$source->hub_id) {
+
+            $hub_id = CategoriesExtraction::run($source->content);
+            if($hub_id)
+            $source->update(['hub_id'=> $hub_id]);
+        }
     }
 
 

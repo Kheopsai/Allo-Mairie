@@ -11,4 +11,9 @@ Route::namespace('Backend')->middleware(['auth:tenant'])->group(function (){
     Route::namespace('Source')->prefix('source')->as('source.')->group(function (){
         Route::get('',Index::class)->name('index');
     });
+
+    Route::namespace('Hub')->prefix('hub')->as('hub.')->group(function (){
+        Route::get('',Index::class)->name('index');
+        Route::get('/show/{hub}',Show::class)->name('show');
+    });
 });

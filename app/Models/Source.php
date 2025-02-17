@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasFiles;
 use App\Traits\HasVectorStore;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -24,12 +25,21 @@ class Source extends Model implements HasMedia
     use HasTags;
     use HasFiles;
 
-    protected $fillable = ['name','type','content','user_id'];
+    protected $fillable = ['name','type','content','user_id','hub_id'];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(SyncedUser::class,'user_id');
+    }
 
     public function sourceable(): MorphTo
     {
        return $this->morphTo() ;
+    }
+
+    public function hub():BelongsTo
+    {
+        return $this->belongsTo(Hub::class);
     }
 
 }

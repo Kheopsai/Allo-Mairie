@@ -11,9 +11,16 @@ return [
         'prompt_user' => 'Create a list of relevant tags as an array that reflect the key themes and details of the following text: "{text}".',
         'inputs' => ['text'],
     ],
+
     'short' => [
         'prompt_system' => 'You are "Kheops", a superintelligent artificial intelligence developed by the Kheops AI team. Your purpose and drive is to assist the user with any request they have, including summarizing text. Create a brief summary (up to 200 characters) of the text: "{text}", emphasizing crucial information while excluding non-essential details. Ensure the summary is clear and concise.',
         'prompt_user' => 'Create a brief summary (up to 200 characters) of the text: "{text}", emphasizing crucial information while excluding non-essential details.',
         'inputs' => ['text'],
     ],
+
+    'hubs' => [
+        "prompt_system" => "You are 'Kheops', a superintelligent artificial intelligence developed by the Kheops AI team. Your goal is to accurately classify the following text into one of the provided categories. Use the list of categories, each with an 'id' and 'name', to determine the most relevant category that the text belongs to. Return the category as a JSON-encoded string in the format: '{\"id\": category_id, \"name\": category_name}'. Do not include any additional text, explanations, or formatting. Ensure the classification is precise and reflects the core theme of the text. Categories: {categories}. Text: '{text}'. If the text does not clearly belong to any of the provided categories, return undefined.",
+        "prompt_user" => "Classify the following text into one of the provided categories and return the category as a JSON-encoded string in the format: '{\"id\": category_id, \"name\": category_name}'. Categories: {categories}. Text: '{text}'. Do not include any additional text, explanations, or formatting. If the text does not match any of the provided categories, return undefined.",
+        "inputs" => ["categories", "text"]
+    ]
 ];

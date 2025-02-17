@@ -10,7 +10,7 @@ return [
             ],
 
             [
-                'label' => 'Metropoles',
+                'label' => 'Companies',
                 'icon' => 'building-office-2',
                 'route' => 'metropole.index'
             ],
@@ -38,7 +38,7 @@ return [
             [
                 'label'=> 'DataBase',
                 'icon'=> 'circle-stack',
-                'route' => 'source.index'
+                'route' => 'hub.index'
             ]
         ]
     ]

@@ -9,6 +9,7 @@ use App\Events\Documents\DocumentProcessEvent;
 use App\Events\ScrapperProcessEvent;
 use App\Facade\LlmManagerFacade;
 use App\Jobs\Sources\ProcessDocumentJob;
+use App\Models\Hub;
 use App\Models\Source;
 use App\Responses\HuggingFace\HuggingFaceResponse;
 use App\Services\Documents\TextExtractor;
@@ -28,6 +29,8 @@ class Create extends ModalComponent
 
     use WireUiActions;
     use WithFileUploads;
+
+    public $hub;
 
     public $step = 1;
 
@@ -63,6 +66,11 @@ class Create extends ModalComponent
         $this->summaryExractor = new SummaryExtractor;
         $this->textExtractor = new TextExtractor;
         $this->tagExtractor = new Tags;
+    }
+
+    public function mount(?Hub $hub)
+    {
+       $this->hub=$hub;
     }
 
 
@@ -193,6 +201,8 @@ class Create extends ModalComponent
         $source->name = $this->name;
         $source->content = $this->content;
         $source->user_id = Auth::id();
+        if($this->hub)
+        $source->hub_id = $this->hub->id;
         $source->type= $this->value;
         $source->save();
         $source->syncTags($this->tags);
