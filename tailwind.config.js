@@ -6,6 +6,11 @@ export default {
     darkMode:'class',
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './vendor/rappasoft/laravel-livewire-tables/resources/views/**/*.blade.php',
+        "./vendor/wireui/wireui/src/*.php",
+        "./vendor/wireui/wireui/ts/**/*.ts",
+        "./vendor/wireui/wireui/src/WireUi/**/*.php",
+        "./vendor/wireui/wireui/src/Components/**/*.php",
         './storage/framework/views/*.php',
         './resources/**/*.blade.php',
         './resources/**/*.js',
@@ -38,5 +43,14 @@ export default {
             },
         },
     },
-    plugins: [],
+
+    plugins: [
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography"),
+        require('@tailwindcss/aspect-ratio'),
+        require('flowbite/plugin'),
+    ],
+    presets: [
+        require('./vendor/wireui/wireui/tailwind.config.js')
+    ],
 };
