@@ -1,4 +1,5 @@
-<aside x-data :class="{'w-20': !open, 'w-96': open}" class="relative bg-white border-r border-secondary-200 shadow-sm transition-all flex flex-col duration-300 z-10 h-full">
+<aside x-data={open:true} :class="{'w-20': !open, 'w-96': open}" class="w-full relative bg-white border-r border-secondary-200 shadow-sm transition-all flex flex-col duration-300 z-10 h-full">
+    <h1 class="font-semibold">{{ __('Channels') }}</h1>
     <div class="flex p-4 border-0 border-b border-secondary-200" :class="{'flex-col justify-center space-y-2': !open, 'justify-between' : open}">
         <div class="flex justify-center">
             <div :class="{'hidden': !open, 'block': open}">
@@ -8,14 +9,14 @@
                 <x-button xs flat squared collection="lucide" icon="plus" wire:click="newChannel()"/>
             </div>
         </div>
-        <div :class="{'justify-center w-full': !open, 'justify-end': open}" class="flex">
-            <x-button xs flat collection="lucide" icon="arrow-left" @click="open = !open" x-show="open"/>
-            <x-button xs flat collection="lucide" icon="arrow-right" @click="open = !open" x-show="!open"/>
+        <div :class="{'justify-center w-full': false, 'justify-end': open}" class="flex">
+            <x-button xs flat collection="lucide" icon="arrow-left" @click="open = !open" x-show="false"/>
+            <x-button xs flat collection="lucide" icon="arrow-right" @click="open = !open" x-show="false"/>
         </div>
     </div>
     <div>
         <ul class="space-y-2" x-show="open">
-            <div class="overflow-y-auto space-y-4 max-h-[85vh] soft-scrollbar p-4">
+            <div class=" space-y-4 max-h-[85vh] soft-scrollbar p-4">
                 @forelse ($channels as $channel)
                     <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
                         <div class="flex-1 overflow-hidden">

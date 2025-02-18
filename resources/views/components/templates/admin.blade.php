@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="flex items-stretch flex-1 overflow-hidden bg-secondary-50">
-                <main class="flex flex-col flex-1 overflow-y-auto h-full">
+                <main class="flex flex-col flex-1 h-full">
                     <x-organismes.navbar/>
                     <div class="w-full space-y-10 overflow-auto soft-scrollbar h-full dark:bg-black">
                         @yield('content')

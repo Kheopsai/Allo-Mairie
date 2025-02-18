@@ -25,6 +25,8 @@ class Index extends Component
         $this->createMessage();
     }
 
+
+
     public function render()
     {
         return view('pages.tenant.backend.chat.index');

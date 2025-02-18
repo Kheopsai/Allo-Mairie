@@ -1,7 +1,7 @@
 @use(App\Enums\ChatType)
 @use(Carbon\Carbon)
-<div class="flex relative overflow-hidden grow h-full" x-data="{ open: true, side: false }">
-    <livewire:components.molecules.chat.sources.sidebar />
+<div class="flex relative grow h-full bg-gradient-to-tl from-primary-100 via-white" x-data="{ open: true, side: false }">
+    {{-- <livewire:components.molecules.chat.sources.sidebar /> --}}
     <main class="w-full flex flex-col space-y-4 relative z-0">
         <div class="!m-0 max-h-[80vh] flex flex-col h-full">
             <div x-auto-scroll class="flex-1 flex flex-col grow pl-8 py-8 overflow-y-auto soft-scrollbar h-full">
@@ -75,7 +75,7 @@
                                                 </div>
                                                 <div
                                                     class="text-sm min-w-64 tracking-wide leading-relaxed pl-12 font-medium text-secondary-700 editor-content">
-                                                    {!! Str::markdown($message->message) !!}
+                                                    {!! $this->renderMixedContent($message->message) !!}
                                                 </div>
                                             </div>
                                             {{-- <div class="pl-12">
@@ -142,13 +142,35 @@
             </div>
         </div>
         <div class="flex items-center space-x-2 z-10 px-36">
-            <div class="bg-white rounded-full border border-secondary-200 shadow-sm flex-1 peer">
-                <div class="px-3 flex justify-center">
+            <div class=" flex-1 peer mb-12">
+                <div class="px-6">
+                    <div
+                        class="mx-auto max-w-screen-lg space-y-2 p-4 rounded-xl shadow-sm bg-white border border-secondary-100">
+                        <div class="p-4 border border-secondary-100 rounded-lg">
+                            <textarea autofocus @disabled($editable) placeholder="{{ __('Ask me anything') }}"
+                                class="peer resize-none border-none rounded-none shadow-none focus:outline-none focus:!ring-0 w-full bg-transparent max-h-10 soft-scrollbar text-sm"
+                                rows="2" wire:model.live="message" wire:keydown.enter="create()"
+                                @keydown.enter.prevent="if ($event.shiftKey) content += '\n'"></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            {{-- <div class="flex items-center space-x-2">
+                                <x-button secondary sm light label="{{ __('Libraries') }}" icon="queue-list"
+                                    disabled />
+                                <x-button secondary sm light label="{{ __('Apps') }}" icon="squares-2x2" disabled />
+                            </div> --}}
+                            <div>
+                                <x-button wire:click="create()" sm label="{{ __('Send') }}"
+                                    right-icon="paper-airplane" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="px-3 flex justify-center">
                     <textarea @disabled($editable)
                         class="peer resize-none border-none rounded-none shadow-none focus:outline-none focus:!ring-0 w-full bg-transparent max-h-10 soft-scrollbar text-sm py-2"
                         rows="2" wire:model.live="message" wire:keydown.enter="create()"
                         @keydown.enter.prevent="if ($event.shiftKey) content += '\n'"></textarea>
-                </div>
+                </div> --}}
             </div>
             <div class="h-full p-0.5 flex items-center">
                 @if ($isAble)
@@ -161,4 +183,46 @@
             </div>
         </div>
     </main>
+            <div class="min-w-72 max-w-72 bg-white max-h-[100vh] lg:flex flex-col overflow-y-auto soft-scrollbar hidden">
+                <div class="px-4 space-y-4 flex flex-col h-full">
+                    <div class="pt-12 flex items-center justify-center">
+                        <div class="flex flex-col justify-center items-center space-y-2">
+                            <div class="h-12 w-12">
+                                <img src="{{asset('image/logo-kheops.svg')}}" class="h-full w-full object-cover rounded-full">
+                            </div>
+                            <div class="text-lg font-semibold leading-relaxed" x-show="open">
+                                <div>Allo-Mairie <span class="text-sm font-light">AI</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="border border-secondary-50 bg-white">
+                    @if(count($this->getSafeDocuments) > 0)
+                        <div class="flex-1 flex flex-col">
+                            <h3 class="text-lg font-semibold mb-4">{{ __('Reference Documents') }}</h3>
+                            <div class="flex-1">
+                                <div class="space-y-4 pr-2">
+                                    @foreach($this->getSafeDocuments as $document)
+                                        <div class="py-4 pl-4 bg-white rounded-lg shadow-sm border border-gray-200">
+                                            <div class="text-sm text-gray-500 mb-2">
+                                                @if(isset($document['score']))
+                                                    <span class="text-xs text-gray-400">
+                                                        (Relevance: {{ number_format($document['score'] * 100, 1) }}%)
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="text-secondary-700 text-xs prose max-h-[5vh] overflow-y-auto soft-scrollbar pr-4">
+                                                {!! $document['content'] !!}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="text-center text-sm py-2 border border-secondary-200 rounded">
+                            {{ __('No source') }}
+                        </div>
+                    @endif
+                </div>
+            </div>
 </div>

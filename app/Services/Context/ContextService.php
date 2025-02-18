@@ -266,4 +266,28 @@ class ContextService
 
         return $dotProduct / (sqrt($normVec1) * sqrt($normVec2));
     }
+
+        public function getSelectedDocuments(int $maxTokens = 8192, bool $filterNullVectorable = true): array
+    {
+        $selectedDocuments = [];
+        $currentTokenCount = 0;
+
+        $documents = $filterNullVectorable
+            ? collect($this->result)->whereNull('vectorable_id')->whereNull('vectorable_type')->toArray()
+            : $this->result;
+
+        foreach ($documents as $context) {
+            $contextText = $this->cleanString($context['text'] ?? $context);
+            $contextTokenCount = $this->estimateTokenCount($contextText);
+
+            if ($currentTokenCount + $contextTokenCount > $maxTokens) {
+                break;
+            }
+
+            $selectedDocuments[] = $context;
+            $currentTokenCount += $contextTokenCount;
+        }
+
+        return $selectedDocuments;
+    }
 }

@@ -14,6 +14,7 @@ use App\Services\Context\ContextService;
 use App\Services\Embeddings\Embedding;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Illuminate\Support\Str;
@@ -36,6 +37,9 @@ trait HasChat
     public string $generatedMessage;
 
     public bool $isAble = false;
+
+
+    public $sources;
 
 
     public function updatedMessage(): void
@@ -163,6 +167,11 @@ trait HasChat
      */
     public function buildContext(): void
     {
+        $cacheKey = $this->getCacheKey();
+        if (Cache::has($cacheKey)) {
+            $cachedResponse = Cache::get($cacheKey);
+            $this->documents = $cachedResponse['documents'];
+        }
         $embedding = Embedding::handle($this->message);
 
         $hub_id = CategoriesExtraction::run($this->message);
@@ -174,8 +183,21 @@ trait HasChat
 
         $contextService = new ContextService($this->message, $contexts);
         $context = $contextService->search()->rerank()->pluck('text')->concatenateContextsWithLimit();
+        $cacheKey = $this->getCacheKey();
+
+        $this->sources = collect($contextService->getSelectedDocuments())
+            ->map(function ($doc) {
+                return is_array($doc) ? $doc : $doc;
+            })
+            ->toArray();
+        Cache::put($cacheKey, ['documents' => $this->sources], now()->addHours(config('cache.chat_ttl', 1)));
         $this->generatedMessage = \App\Actions\Tenant\Backend\Chat::handleStatic($this->message, $context);
         $this->reset('message');
+    }
+
+    private function getCacheKey(): string
+    {
+        return 'channel:' . md5($this->channel);
     }
 
 
@@ -187,5 +209,43 @@ trait HasChat
                 SummaryExtractorEvent::dispatch(Channel::find($this->channel), $message, 'name');
             }
         }
+    }
+
+    #[Computed]
+    public function getSafeDocuments(): array
+    {
+        if (isset($this->channel)) {
+            if (Cache::has($this->getCacheKey())) {
+                $cachedResponse = Cache::get($this->getCacheKey());
+                $this->sources = $cachedResponse['documents'];
+            }
+        }
+        return collect($this->sources)
+            ->map(function ($doc) {
+                return [
+                    'content' => $doc ?? '',
+                    'score' => $doc['score'] ?? null
+                ];
+            })
+            ->toArray();
+    }
+
+    #[Computed]
+    function renderMixedContent($content): string
+    {
+        $content = preg_replace('/(\n)\s*\./', '$1', $content);
+        $parts = preg_split('/(<.*?>)/', $content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+
+        $output = '';
+        foreach ($parts as $part) {
+            if (preg_match('/<.*?>/', $part)) {
+                $output .= $part;
+            } else {
+                $processed = str()->inlineMarkdown(preg_replace(['/\n{2,}/', '/\n/'], ["\n\n", "  \n"], $part));
+                $output .= preg_replace('/(<br>\s*|<\/p>\s*<p>\s*)\./', '$1', $processed);
+            }
+        }
+
+        return $output;
     }
 }

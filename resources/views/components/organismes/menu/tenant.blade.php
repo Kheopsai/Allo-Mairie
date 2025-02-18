@@ -17,7 +17,9 @@
                             <span>{{ __($menu['label']) }}</span>
                         </x-atoms.link>
                 @endif
+
             </div>
         @endforeach
+    <livewire:components.molecules.chat.sources.sidebar />
     </div>
 </div>

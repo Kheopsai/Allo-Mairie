@@ -43,6 +43,7 @@
                 </div> --}}
                 <div class="flex-1 w-full pl-12 mt-8 space-y-1">
                     <livewire:components.organismes.menu/>
+
                 </div>
             </div>
         </div>
