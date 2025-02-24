@@ -84,7 +84,6 @@ class Create extends ModalComponent
                 $description = trans('Your action was successfully saved')
             );
         } catch (\Exception $exception) {
-            ds($exception);
             DB::rollBack();
             $this->notification()->error(
                 $title = trans('Server Error'),

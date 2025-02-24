@@ -30,6 +30,10 @@ Route::namespace('Backend')->middleware(['auth'])->group(function(){
         Route::get('',Index::class)->name('index');
     });
 
+    Route::namespace('Permission')->prefix('permission')->as('permission.')->group(function(){
+        Route::get('',Index::class)->name('index');
+    });
+
     Route::namespace('Setting')->prefix('setting')->as('setting.')->group(function (){
         Route::get('',Index::class)->name('index');
     });

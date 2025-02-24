@@ -16,7 +16,10 @@ return [
     'roles_structure' => [
         RoleEnum::Admin => [
             'users' => 'c,r,u,d',
-            'metropole'=>'c,r,u,d',
+            'tenant' => 'c,r,u,d',
+            'company'=>'c,r,u,d',
+            'roles'=>'c,r,u,d',
+            'plan'=>'c,r,u,d',
             'profile' => 'r,u',
         ],
         RoleEnum::User => [

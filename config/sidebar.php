@@ -46,6 +46,12 @@ return [
                 'label'=> 'Roles',
                 'icon' => 'shield-check',
                 'route'=>'role.index'
+            ],
+
+            [
+                'label'=> 'Permissions',
+                'icon' => 'key',
+                'route'=>'permission.index'
             ]
         ],
 
