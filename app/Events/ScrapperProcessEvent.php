@@ -17,10 +17,13 @@ class ScrapperProcessEvent implements ShouldQueue
 
     public string $url;
 
-    public function __construct(int $id,string $url)
+    public int $user_id;
+
+    public function __construct(int $id,string $url,int $user_id)
     {
         $this->id=$id;
         $this->url=$url;
+        $this->user_id= $user_id;
     }
 
 }

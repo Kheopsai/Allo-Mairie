@@ -39,5 +39,9 @@ class Tenant extends BaseTenant  implements TenantWithDatabase
         return $this->belongsTo(Metropole::class,'metropole_id');
     }
 
+    public function setting():HasOne
+    {
+        return $this->hasOne(Setting::class);
+    }
 
 }

@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 #[ObservedBy(MetropoleObserver::class)]
 class Metropole extends Model
 {
-    protected $fillable=['name'];
+    protected $fillable=['name','type'];
 
     public function users():BelongsToMany
     {

@@ -5,6 +5,7 @@ namespace App\Actions\Tenant\Backend;
 use App\Facade\LlmManagerFacade;
 use App\Models\Hub;
 use App\Services\CategoriesExtractor\CategoriesExtractor;
+use Illuminate\Support\Facades\Auth;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class CategoriesExtraction
@@ -15,7 +16,7 @@ class CategoriesExtraction
 
     public function __construct($context = null)
     {
-        $this->categoriesExtractor= new CategoriesExtractor;
+        $this->categoriesExtractor = new CategoriesExtractor;
     }
 
     public function handle($content)
@@ -32,11 +33,13 @@ class CategoriesExtraction
         $prompt = $this->categoriesExtractor->handle($content, $jsonstring);
         $response = LlmManagerFacade::build(config('llm.config'));
         $result = $response->getResponse($prompt);
-        if(str_contains($result,'undefined'))
-            return null;
         if (preg_match('/\{.*?\}/', $result, $matches))
             $jsonContent = $matches[0];
-        $cateogry= json_decode($jsonContent) ;
-        return $cateogry->id;
+        $category = json_decode($jsonContent);
+        if ($category->id ==="new") {
+            $newCategory = Hub::create(['name' => $category->name, 'user_id' => Auth::id()]);
+            return $newCategory->id;
+        } else
+            return $category->id;
     }
 }

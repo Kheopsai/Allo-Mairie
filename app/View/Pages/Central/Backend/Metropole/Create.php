@@ -2,7 +2,7 @@
 
 namespace App\View\Pages\Central\Backend\Metropole;
 
-use App\Models\Metropole;
+use App\Enums\GovernmentInstitutionType;
 use App\Models\User;
 use App\Support\FormComponent;
 use Livewire\Attributes\Layout;
@@ -13,6 +13,9 @@ class Create extends FormComponent
 {
     #[Validate('required|min:3')]
     public $name = '';
+
+    #[Validate('required')]
+    public $type='';
 
     #[Validate('required|min:3')]
     public $first_name = '';
@@ -29,11 +32,18 @@ class Create extends FormComponent
 
     public $password_confirmation = '';
 
+    public $governmentInstitutions;
+
+    public function mount()
+    {
+        $this->governmentInstitutions= GovernmentInstitutionType::getValues();
+    }
+
     public function save()
     {
         $this->validate();
         $user = User::create($this->only(['email', 'password','first_name','last_name']));
-        $user->metropoles()->create($this->only('name'));
+        $user->metropoles()->create($this->only('name','type'));
     }
 
     public function render()

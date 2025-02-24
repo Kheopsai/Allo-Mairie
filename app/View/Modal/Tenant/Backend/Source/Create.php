@@ -212,10 +212,10 @@ class Create extends ModalComponent
                 $this->addToRessources($source);
                 break;
             case 'text':
-                ContentProcessEvent::dispatch($source->id, tenant()->id, $this->content);
+                ContentProcessEvent::dispatch($source->id, tenant()->id, $this->content,Auth::id());
                 break;
             case 'url':
-                ScrapperProcessEvent::dispatch($source->id,$this->url);
+                ScrapperProcessEvent::dispatch($source->id,$this->url,Auth::id());
                 break;
         }
         $this->dispatch('refreshDatatable');
@@ -229,7 +229,7 @@ class Create extends ModalComponent
     public function addToRessources($source): void
     {
         $source->addFile($this->file)->in('tmp')->on('local')->save();
-        DocumentProcessEvent::dispatch(tenant(),$source);
+        DocumentProcessEvent::dispatch(tenant(),$source,Auth::id());
     }
 
     public function render()

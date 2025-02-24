@@ -7,6 +7,7 @@ use App\Actions\Tenant\Backend\Tags;
 use App\Enums\StatusEnum;
 use App\Events\ContentProcessEvent;
 use App\Facade\LlmManagerFacade;
+use App\Http\Middleware\AuthenticateQueuesMiddleware;
 use App\Models\Hub;
 use App\Models\Source;
 use App\Services\CategoriesExtractor\CategoriesExtractor;
@@ -88,5 +89,10 @@ class ContentProcessListener implements ShouldQueue
     {
         $id = $event->id;
         Source::findOrFail($id)->update(['status' => StatusEnum::ERROR]);
+    }
+
+    public function middleware(ContentProcessEvent $event)
+    {
+        return [new AuthenticateQueuesMiddleware($event->user_id)];
     }
 }

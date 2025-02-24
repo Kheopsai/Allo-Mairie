@@ -1,3 +1,4 @@
+@props(['colspan'])
 <div class="grid gap-8">
     <div class="grid grid-cols-12 gap-8">
         <div class="col-span-3">
@@ -12,7 +13,7 @@
                 </div>
             @endisset
         </div>
-        <div class="col-span-6">
+        <div class="{{ $colspan ?? 'col-span-6' }} ">
             {{ $slot }}
         </div>
     </div>

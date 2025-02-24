@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\GovernmentInstitutionType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('metropoles', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->enum('type',GovernmentInstitutionType::getValues());
+            $table->json('data')->nullable();
+            $table->string('tenant_id')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('metropoles');
+        Schema::dropIfExists('settings');
     }
 };

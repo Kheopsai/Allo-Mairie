@@ -20,24 +20,42 @@ return [
                 'route' => 'user.index'
             ],
 
+
         ],
-    ],
-    'tenant'=> [
-        [
-            'label'=>'Dashboard',
-            'icon'=> 'home',
-            'route'=>'dashboard'
-        ]
-        ,
-        [
-            'label'=>'Chat',
-            'icon'=>'chat-bubble-oval-left',
-            'route'=>'chat.index'
-        ],
-        'Data Base'=>[
+        'Finance' => [
+
             [
-                'label'=> 'DataBase',
-                'icon'=> 'circle-stack',
+                'label' => 'Plans',
+                'icon' => 'users',
+                'route' => 'plan.index'
+            ],
+        ],
+
+        'Settings' => [
+
+            [
+                'label' => 'Settings',
+                'icon' => 'cog-6-tooth',
+                'route' => 'setting.index'
+            ],
+        ]
+    ],
+
+    'tenant' => [
+        [
+            'label' => 'Dashboard',
+            'icon' => 'home',
+            'route' => 'dashboard'
+        ],
+        [
+            'label' => 'Chat',
+            'icon' => 'chat-bubble-oval-left',
+            'route' => 'chat.index'
+        ],
+        'Data Base' => [
+            [
+                'label' => 'DataBase',
+                'icon' => 'circle-stack',
                 'route' => 'hub.index'
             ]
         ]

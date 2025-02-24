@@ -47,6 +47,7 @@ class Table extends DataTableComponent
             Column::make("Id", "id")
                 ->sortable(),
             Column::make('Name','name'),
+            Column::make('Type','type'),
             Column::make("Created at", "created_at")
                 ->sortable(),
             Column::make("Updated at", "updated_at")
@@ -57,5 +58,11 @@ class Table extends DataTableComponent
     public function add()
     {
         return redirect()->route('metropole.create');
+    }
+
+
+    public function edit(Metropole $metropole)
+    {
+        return redirect()->route('metropole.update',['metropole'=> $metropole]);
     }
 }

@@ -7,6 +7,7 @@ use App\Actions\Tenant\Backend\Tags;
 use App\Enums\StatusEnum;
 use App\Events\ScrapperProcessEvent;
 use App\Facade\LlmManagerFacade;
+use App\Http\Middleware\AuthenticateQueuesMiddleware;
 use App\Models\Source;
 use App\Parsers\HtmlToText;
 use App\Responses\HuggingFace\HuggingFaceResponse;
@@ -141,4 +142,9 @@ class ScrapperProcessListener implements ShouldQueue
     //     $id = $event->id;
     //     Source::findOrFail($id)->update(['status' => StatusEnum::ERROR]);
     // }
+
+    public function middleware(ScrapperProcessEvent $event)
+    {
+        return [new AuthenticateQueuesMiddleware($event->user_id)];
+    }
 }

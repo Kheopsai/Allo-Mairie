@@ -6,6 +6,7 @@ use App\Actions\Tenant\Backend\CategoriesExtraction;
 use App\Events\Documents\DocumentProcessEvent;
 use App\Facade\LlmManagerFacade;
 use App\Handlers\DocumentProcessingHandler;
+use App\Http\Middleware\AuthenticateQueuesMiddleware;
 use App\Models\Source;
 use App\Responses\HuggingFace\HuggingFaceResponse;
 use App\Serializers\ClosureSerializer;
@@ -178,5 +179,10 @@ class DocumentsProcessListener implements ShouldQueue
     private function serializeClosure(callable $closure): string
     {
         return ClosureSerializer::serialize($closure);
+    }
+
+    public function midlleware(DocumentProcessEvent $event)
+    {
+        return [new AuthenticateQueuesMiddleware($event->user_id)];
     }
 }

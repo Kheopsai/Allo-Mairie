@@ -24,11 +24,14 @@ class DocumentProcessEvent implements ShouldBeUniqueUntilProcessing, ShouldQueue
 
     public string $provider;
 
-    public function __construct(string $tenant, Source $source, string $provider = VectorStoreEnum::Postgres)
+    public int $user_id;
+
+    public function __construct(string $tenant, Source $source,$user_id, string $provider = VectorStoreEnum::Postgres)
     {
         $this->tenant = $tenant;
         $this->source = $source;
         $this->provider = $provider;
+        $this->user_id = $user_id;
     }
 
 }
