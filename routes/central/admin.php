@@ -15,6 +15,11 @@ Route::namespace('Backend')->middleware(['auth'])->group(function(){
         Route::get('/create',Create::class)->name('create');
         Route::get('/update/{metropole}',Update::class)->name('update');
     });
+
+    Route::namespace('Tenant')->prefix('tenant')->as('tenant.')->group(function(){
+        Route::get('',Index::class)->name('index');
+    });
+
     Route::namespace('Plan')->prefix('plan')->as('plan.')->group(function (){
         Route::get('',Index::class)->name('index');
         Route::get('/create',Create::class)->name('create');

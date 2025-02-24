@@ -1,13 +1,15 @@
 <?php
 
 return [
+
     'central' => [
+
+        [
+            'label' => 'Dashboard',
+            'icon' => 'home',
+            'route' => 'dashboard'
+        ],
         'Central' => [
-            [
-                'label' => 'Dashboard',
-                'icon' => 'home',
-                'route' => 'dashboard'
-            ],
 
             [
                 'label' => 'Companies',
@@ -21,6 +23,15 @@ return [
             ],
 
 
+        ],
+
+        'Machines' => [
+
+            [
+                'label' => 'Tenants',
+                'icon' => 'users',
+                'route' => 'tenant.index'
+            ],
         ],
         'Finance' => [
 

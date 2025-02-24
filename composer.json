@@ -15,6 +15,7 @@
         "bensampo/laravel-enum": "^6.11",
         "blade-ui-kit/blade-heroicons": "^2.5",
         "helgesverre/mistral": "*",
+        "laravel/cashier": "^15.6",
         "laravel/framework": "^11.31",
         "laravel/horizon": "*",
         "laravel/tinker": "^2.9",
