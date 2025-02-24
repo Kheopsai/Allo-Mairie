@@ -29,7 +29,7 @@ return [
 
             [
                 'label' => 'Tenants',
-                'icon' => 'users',
+                'icon' => 'globe-alt',
                 'route' => 'tenant.index'
             ],
         ],
@@ -40,6 +40,13 @@ return [
                 'icon' => 'users',
                 'route' => 'plan.index'
             ],
+        ],
+        'Roles And Permissions'=>[
+            [
+                'label'=> 'Roles',
+                'icon' => 'shield-check',
+                'route'=>'role.index'
+            ]
         ],
 
         'Settings' => [

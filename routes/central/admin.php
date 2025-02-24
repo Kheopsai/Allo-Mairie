@@ -25,6 +25,11 @@ Route::namespace('Backend')->middleware(['auth'])->group(function(){
         Route::get('/create',Create::class)->name('create');
 
     });
+
+    Route::namespace('Role')->prefix('role')->as('role.')->group(function(){
+        Route::get('',Index::class)->name('index');
+    });
+
     Route::namespace('Setting')->prefix('setting')->as('setting.')->group(function (){
         Route::get('',Index::class)->name('index');
     });
