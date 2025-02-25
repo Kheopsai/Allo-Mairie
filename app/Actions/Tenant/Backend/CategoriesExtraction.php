@@ -36,7 +36,9 @@ class CategoriesExtraction
         if (preg_match('/\{.*?\}/', $result, $matches))
             $jsonContent = $matches[0];
         $category = json_decode($jsonContent);
-        if (!$chat && $category->id ==="new") {
+        if ( $category->id ==="new") {
+            if($chat)
+            return 0;
             $newCategory = Hub::create(['name' => $category->name, 'user_id' => Auth::id()]);
             return $newCategory->id;
         } else
