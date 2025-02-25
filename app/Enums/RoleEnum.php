@@ -12,6 +12,7 @@ final class RoleEnum extends Enum
 {
     const Admin = 'admin';
     const User = 'user';
+    const Busniss = 'busniss';
 
 
     public static function label($value): string
@@ -24,6 +25,7 @@ final class RoleEnum extends Enum
         return [
             self::Admin => trans('Admin'),
             self::User => trans('User'),
+            self::Busniss => trans('Busniss')
         ];
     }
 }

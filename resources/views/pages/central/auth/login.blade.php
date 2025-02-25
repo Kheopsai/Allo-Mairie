@@ -37,7 +37,7 @@
                 </div>
                 <p class="text-sm font-light">
                     {{ __("Don't have your account yet? ") }}
-                    {{-- <a class="font-medium text-primary-500 transition-all duration-200 hover:underline hover:text-primary-700" href="{{ route('register') }}">{{ __('Sign up') }}</a> --}}
+                    <a class="font-medium text-primary-500 transition-all duration-200 hover:underline hover:text-primary-700" href="{{ route('register') }}">{{ __('Sign up') }}</a>
                 </p>
             </div>
         </form>
