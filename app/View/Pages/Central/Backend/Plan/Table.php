@@ -48,7 +48,7 @@ class Table extends DataTableComponent
 
     public function edit(Plan $plan)
     {
-        return redirect()->route('admin.plans.update', ['plan' => $plan]);
+        return redirect()->route('plan.update', ['plan' => $plan]);
     }
 
     public function columns(): array

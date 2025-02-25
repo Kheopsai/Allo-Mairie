@@ -23,6 +23,7 @@ Route::namespace('Backend')->middleware(['auth'])->group(function(){
     Route::namespace('Plan')->prefix('plan')->as('plan.')->group(function (){
         Route::get('',Index::class)->name('index');
         Route::get('/create',Create::class)->name('create');
+        Route::get('/update/{plan}',Update::class)->name('update');
 
     });
 
