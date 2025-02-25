@@ -19,7 +19,7 @@ class CategoriesExtraction
         $this->categoriesExtractor = new CategoriesExtractor;
     }
 
-    public function handle($content)
+    public function handle($content,$chat=false)
     {
 
         $data = Hub::select('id', 'name')->get();
@@ -36,10 +36,10 @@ class CategoriesExtraction
         if (preg_match('/\{.*?\}/', $result, $matches))
             $jsonContent = $matches[0];
         $category = json_decode($jsonContent);
-        if ($category->id ==="new") {
+        if (!$chat && $category->id ==="new") {
             $newCategory = Hub::create(['name' => $category->name, 'user_id' => Auth::id()]);
             return $newCategory->id;
         } else
-            return $category->id;
+            return $category?->id;
     }
 }
