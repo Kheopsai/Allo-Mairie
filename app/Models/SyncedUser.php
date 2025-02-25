@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Observers\SyncedUserObserver;
 use App\Traits\CheckConnection;
 use App\Traits\HasImage;
 use App\Traits\HasProfilePhoto;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laratrust\Contracts\LaratrustUser;
 use Stancl\Tenancy\Contracts\Syncable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Stancl\Tenancy\Database\Concerns\ResourceSyncing;
 
+#[ObservedBy(SyncedUserObserver::class)]
 class SyncedUser extends Authenticatable implements LaratrustUser, Syncable
 {
     use HasRolesAndPermissions;
@@ -88,13 +91,25 @@ class SyncedUser extends Authenticatable implements LaratrustUser, Syncable
         ];
     }
 
-    public function channels():HasMany
+    public function channels(): HasMany
     {
         return $this->hasMany(Channel::class);
     }
 
-    public function hubs():HasMany
+    public function hubs(): HasMany
     {
         return $this->hasMany(Hub::class);
+    }
+
+    public function credit(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->credits->available_credits,
+        );
+    }
+
+    public function credits(): HasOne
+    {
+        return $this->hasOne(Credit::class, 'user_id', 'id');
     }
 }

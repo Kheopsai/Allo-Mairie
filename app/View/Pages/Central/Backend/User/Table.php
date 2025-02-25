@@ -38,6 +38,6 @@ class Table extends DataTableComponent
 
     public function builder(): Builder
     {
-        return User::whereDoesntHaveRoles(RoleEnum::Admin);
+        return User::whereNot('email','admin@admin.site');
     }
 }

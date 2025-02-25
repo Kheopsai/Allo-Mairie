@@ -32,9 +32,9 @@
                                 </div>
                             </div>
                             <div>
-                                {{-- @if (!tenant())
-                                    <x-button href="{{ route('admin.settings.index') }}" icon="cog-6-tooth" label="{{ __('Settings') }}" flat class="w-full flex !justify-start"/>
-                                @endif--}}
+                                @if (!tenant())
+                                    <x-button href="{{ route('setting.index') }}" icon="cog-6-tooth" label="{{ __('Settings') }}" flat class="w-full flex !justify-start"/>
+                                @endif
                                 <form method="post" action="{{ route('logout') }}">
                                     @csrf
                                     <x-button type="submit" icon="arrow-left-start-on-rectangle" label="{{ __('Log Out') }}" flat class="w-full flex !justify-start"/>
