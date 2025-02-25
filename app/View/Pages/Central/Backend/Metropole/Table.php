@@ -6,6 +6,7 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Metropole;
 use App\Traits\HasActionResource;
+use Illuminate\Support\Facades\Gate;
 use WireUi\Traits\WireUiActions;
 
 class Table extends DataTableComponent
@@ -17,25 +18,21 @@ class Table extends DataTableComponent
 
     public function actions(): array
     {
-        return [
-            [
-                'label' => trans('Edit'),
-                'icon' => 'pencil',
-                'action' => 'edit',
-            ],
-            [
-                'label' => trans('Delete'),
-                'icon' => 'trash',
-                'action' => 'deleteConfirmation',
-            ],
+        $actions= [
+
+            auth()->user()->hasPermission('company-update') ? $this->getDefaultEditAction() : null,
+            auth()->user()->hasPermission('company-delete') ? $this->getDefaultDeleteAction() : null,
 
         ];
+        return array_filter($actions);
     }
 
     public function configure(): void
     {
         $this->sethidebulkactionswhenemptystatus(count($this->getselected()) == 0)
-            ->setPrimaryKey('id')
+            ->setPrimaryKey('id');
+           if(Gate::allows('create',Metropole::class))
+            $this
             ->setConfigurableAreas([
                 'toolbar-right-start' => 'components.atoms.columns.add',
             ]);

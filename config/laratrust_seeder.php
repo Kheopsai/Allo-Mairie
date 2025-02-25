@@ -15,12 +15,12 @@ return [
 
     'roles_structure' => [
         RoleEnum::Admin => [
-            'users' => 'c,r,u,d',
-            'tenant' => 'c,r,u,d',
-            'company' => 'c,r,u,d',
-            'roles' => 'c,r,u,d',
-            'plan' => 'c,r,u,d',
-            'profile' => 'r,u',
+            'users' => 'i,c,r,u,d',
+            'tenant' => 'i,c,r,u,d',
+            'company' => 'i,c,r,u,d',
+            'roles' => 'i,c,r,u,d',
+            'plan' => 'i,c,r,u,d',
+            'profile' => 'i,r,u',
         ],
         RoleEnum::Busniss => [
             'profile' => 'r,u',
@@ -31,6 +31,7 @@ return [
     ],
 
     'permissions_map' => [
+        'i' => 'index',
         'c' => 'create',
         'r' => 'read',
         'u' => 'update',

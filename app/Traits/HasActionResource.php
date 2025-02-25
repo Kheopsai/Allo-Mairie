@@ -24,7 +24,7 @@ trait HasActionResource
         return [
             ComponentColumn::make(trans('Actions'), 'id')
                 ->component('atoms.columns.action')
-                ->attributes(fn ($value, $row, Column $column) => [
+                ->attributes(fn($value, $row, Column $column) => [
                     'actions' => $this->actions(),
                     'id' => $value,
                 ]),
@@ -69,5 +69,24 @@ trait HasActionResource
         return [
             'deleteConfirmation' => trans('Delete'),
         ];
+    }
+
+    public function getDefaultDeleteAction(): array
+    {
+        return[
+                'label' => trans('Delete'),
+                'icon' => 'trash',
+                'action' => 'deleteConfirmation',
+            ];
+    }
+
+
+    public function getDefaultEditAction(): array
+    {
+        return[
+                'label' => trans('Edit'),
+                'icon' => 'pencil',
+                'action' => 'edit',
+            ];
     }
 }

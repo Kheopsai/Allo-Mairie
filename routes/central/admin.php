@@ -11,9 +11,9 @@ Route::namespace('Backend')->middleware(['auth'])->group(function(){
     });
 
     Route::namespace('Metropole')->prefix('metropole')->as('metropole.')->group(function(){
-        Route::get('',Index::class)->name('index');
-        Route::get('/create',Create::class)->name('create');
-        Route::get('/update/{metropole}',Update::class)->name('update');
+        Route::get('',Index::class)->name('index')->middleware('can:viewAny,App\Models\Metropole');
+        Route::get('/create',Create::class)->name('create')->middleware('can:create,App\Models\Metropole');
+        Route::get('/update/{metropole}',Update::class)->name('update')->middleware('can:update,metropole');
     });
 
     Route::namespace('Tenant')->prefix('tenant')->as('tenant.')->group(function(){

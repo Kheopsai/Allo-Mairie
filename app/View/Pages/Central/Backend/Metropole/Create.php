@@ -3,6 +3,7 @@
 namespace App\View\Pages\Central\Backend\Metropole;
 
 use App\Enums\GovernmentInstitutionType;
+use App\Models\Metropole;
 use App\Models\User;
 use App\Support\FormComponent;
 use Livewire\Attributes\Layout;
@@ -41,6 +42,7 @@ class Create extends FormComponent
 
     public function save()
     {
+        $this->authorize('create',Metropole::class);
         $this->validate();
         $user = User::create($this->only(['email', 'password','first_name','last_name']));
         $user->metropoles()->create($this->only('name','type'));
