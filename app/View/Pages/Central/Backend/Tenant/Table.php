@@ -75,6 +75,7 @@ class Table extends DataTableComponent
 
     public function add(Tenant $tenant): void
     {
+        $this->authorize('create',User::class);
         $this->dispatch('openModal', 'modal.central.user.create', ['tenant' => $tenant]);
     }
 
@@ -84,6 +85,7 @@ class Table extends DataTableComponent
     #[On('delete')]
     public function delete(User $value): void
     {
+        $this->authorize('delete',$value);
         $value->deleteOrFail();
     }
 

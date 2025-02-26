@@ -32,6 +32,7 @@ class Update extends ModalComponent
 
     public function save(): void
     {
+        $this->authorize('update',$this->role);
         $this->validate();
         $this->role->update([
             'name' => $this->name,

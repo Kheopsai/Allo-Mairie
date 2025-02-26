@@ -102,7 +102,8 @@ class Update extends FormComponent
 
     public function save(): void
     {
-        // $this->validate();
+        $this->authorize('update',$this->plan);
+        $this->validate();
         // $stripe = new StripeService;
         // $product = $stripe->createProduct($this->name, $this->short_description);
         // $monthly_price = $stripe->createPrice(CurrencyEnum::Eur, $this->monthly_price, IntervalEnum::Month, $product->id);

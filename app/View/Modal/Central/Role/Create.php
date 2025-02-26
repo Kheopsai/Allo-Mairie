@@ -21,6 +21,7 @@ class Create extends ModalComponent
 
     public function save(): void
     {
+        $this->authorize('create',Role::class);
         $this->validate();
         Role::create([
             'name' => $this->name,

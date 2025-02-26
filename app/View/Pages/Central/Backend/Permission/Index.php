@@ -66,6 +66,7 @@ class Index extends FormComponent
 
     public function save()
     {
+        $this->authorize('assign',Permission::class);
             foreach ($this->selectedPermissions as $role => $permissions) {
                 $role = Role::find($role);
                 $synced = [];

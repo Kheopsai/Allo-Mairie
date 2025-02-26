@@ -18,18 +18,14 @@ class Table extends DataTableComponent
 
     public function actions(): array
     {
-        return [
-            [
-                'label' => trans('Edit'),
-                'icon' => 'pencil',
-                'action' => 'edit',
-            ],
-            [
-                'label' => trans('Delete'),
-                'icon' => 'trash',
-                'action' => 'deleteConfirmation',
-            ],
+
+        $actions = [
+
+            auth()->user()->hasPermission('plan-update') ? $this->getDefaultEditAction() : null,
+            auth()->user()->hasPermission('plan-delete') ? $this->getDefaultDeleteAction() : null,
+
         ];
+        return array_filter($actions);
     }
 
     public function configure(): void

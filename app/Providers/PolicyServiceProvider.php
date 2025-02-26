@@ -2,15 +2,17 @@
 
 namespace App\Providers;
 
-use App\Models\Metropole;
-use App\Policies\CompanyPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider;
 
 class PolicyServiceProvider extends AuthServiceProvider
 {
 
     protected $policies=[
-        Metropole::class => CompanyPolicy::class,
+        \App\Models\Metropole::class => \App\Policies\CompanyPolicy::class,
+        \App\Models\Plan::class => \App\Policies\PlanPolicy::class,
+        \App\Models\Role::class => \App\Policies\RolePolicy::class,
+        \App\Models\Permission::class => \App\Policies\PermisssionPolicy::class,
+        \App\Models\User::class => \App\Policies\UserPolicy::class,
     ];
 
     /**

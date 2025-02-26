@@ -7,9 +7,6 @@ use App\Models\Metropole;
 use App\Support\FormComponent;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
-use Livewire\Component;
-use Livewire\Features\SupportConsoleCommands\Commands\FormCommand;
-use PhpOffice\PhpPresentation\Writer\ODPresentation\Meta;
 
 #[Layout('components.templates.admin')]
 class Update extends FormComponent
@@ -39,6 +36,7 @@ class Update extends FormComponent
 
     public function save()
     {
+        $this->authorize('update',$this->metropole);
         $this->validate();
         $this->metropole->update($this->only('name', 'type'));
     }

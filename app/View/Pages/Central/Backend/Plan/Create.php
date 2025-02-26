@@ -105,6 +105,7 @@ class Create extends FormComponent
 
     public function save(): void
     {
+        $this->authorize('create',Plan::class);
         $this->validate();
         $stripe = new StripeService;
         $product = $stripe->createProduct($this->name, $this->short_description);

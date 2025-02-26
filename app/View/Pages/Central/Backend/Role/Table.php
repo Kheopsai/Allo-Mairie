@@ -18,20 +18,15 @@ class Table extends DataTableComponent
 
     public function actions(): array
     {
-        return [
-            [
-                'label' => trans('Edit'),
-                'icon' => 'pencil',
-                'action' => 'edit',
-            ],
-            [
-                'label' => trans('Delete'),
-                'icon' => 'trash',
-                'action' => 'deleteConfirmation',
-            ],
+        $actions = [
+
+            auth()->user()->hasPermission('role-update') ? $this->getDefaultEditAction() : null,
+            auth()->user()->hasPermission('role-delete') ? $this->getDefaultDeleteAction() : null,
 
         ];
+        return array_filter($actions);
     }
+
     public function configure(): void
     {
         $this->setHideBulkActionsWhenEmptyStatus(count($this->getSelected()) == 0)
@@ -70,11 +65,13 @@ class Table extends DataTableComponent
 
     public function add()
     {
+        $this->authorize('creaet',Role::class);
         $this->dispatch('openModal', 'modal.central.role.create');
     }
 
     public function edit(Role $role)
     {
+        $this->authorize('update',$role);
         $this->dispatch('openModal', 'modal.central.role.update', ['role' => Role::find($role)]);
     }
 }

@@ -61,6 +61,7 @@ class Create extends ModalComponent
      */
     public function save(): void
     {
+        $this->authorize('create',User::class);
         $this->validate();
         DB::beginTransaction();
         try {
