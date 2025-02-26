@@ -32,7 +32,7 @@ trait HasChat
 
     public bool $isStart = true;
 
-    public string $message;
+    public string $message='';
 
     public string $generatedMessage;
 
@@ -128,6 +128,7 @@ trait HasChat
     #[On('chat')]
     public function createMessage(): void
     {
+        if(empty($this->message))return ;
         $this->dispatchSummaryExtractor($this->message);
         $this->buildContext();
         $this->toggleLoading();

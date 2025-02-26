@@ -8,10 +8,12 @@ use App\Services\Tokens\TokenService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Features\SupportStreaming\HandlesStreaming;
+use WireUi\Traits\WireUiActions;
 
 trait HasKheops
 {
     use HandlesStreaming;
+    use WireUiActions;
 
     public string $stream = 'content';
 
@@ -45,6 +47,14 @@ trait HasKheops
         $creditsTotalEstimated = ceil($inputTokens / $llm->conversion_rate) + $creditsOutput;
 
         if (Auth::user()->credits->available_credits < $creditsTotalEstimated) {
+
+            $this->dialog()->show([
+                'icon' => 'error',
+                'title' => 'Insufficient funds!',
+                'description' => 'Insufficient funds for this request.',
+            ]);
+            $this->dispatch('loading');
+            return;
             throw new Exception(trans('Insufficient funds for this request.'));
         }
 
@@ -87,6 +97,13 @@ trait HasKheops
         $creditsOutput = ceil($maxOutputTokens / $llm->conversion_rate);
         $creditsTotalEstimated = ceil($inputTokens / $llm->conversion_rate) + $creditsOutput;
         if (Auth::user()->credits->available_credits < $creditsTotalEstimated) {
+            $this->dialog()->show([
+                'icon' => 'error',
+                'title' => 'Insufficient funds!',
+                'description' => 'Insufficient funds for this request.',
+            ]);
+            $this->dispatch('loading');
+            return;
             throw new Exception(trans('Insufficient funds for this request.'));
         }
 

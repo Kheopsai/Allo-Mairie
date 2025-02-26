@@ -9,13 +9,13 @@ class PermisssionPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAll(User $user):bool
+    public function viewAny(User $user):bool
     {
         return $user->hasPermission('permission-index');
     }
 
-    public function assigne(User $user):bool
+    public function assign(User $user):bool
     {
-        return $this->hasPermission('permission-create');
+        return $user->hasPermission('permission-create');
     }
 }

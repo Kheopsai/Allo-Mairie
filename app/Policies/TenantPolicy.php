@@ -12,7 +12,7 @@ class TenantPolicy
 
     public function viewAny(User $user):bool
     {
-        return $user->hasPermission('teannt-index');
+        return $user->hasPermission('tenant-index');
     }
 
     public function create(User $user):bool

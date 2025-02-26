@@ -19,7 +19,7 @@ return [
             'tenant' => 'i,c,r,u,d',
             'company' => 'i,c,r,u,d',
             'permission' => 'i,c',
-            'roles' => 'i,c,r,u,d',
+            'role' => 'i,c,r,u,d',
             'plan' => 'i,c,r,u,d',
             'profile' => 'i,r,u',
         ],

@@ -22,8 +22,8 @@
 </head>
 
 <body class="antialiased tracking-tight">
-    <x-dialog z-index="z-100"/>
-    <x-notifications z-index="z-100"/>
+    <x-dialog z-index="z-50"/>
+    <x-notifications z-index="z-50"/>
     @yield('body')
     @livewire('wire-elements-modal')
 

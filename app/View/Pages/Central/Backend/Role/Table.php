@@ -65,7 +65,7 @@ class Table extends DataTableComponent
 
     public function add()
     {
-        $this->authorize('creaet',Role::class);
+        $this->authorize('create',Role::class);
         $this->dispatch('openModal', 'modal.central.role.create');
     }
 

@@ -34,7 +34,7 @@
                                                         <div class="flex space-x-4 items-center">
                                                             <div class="p-2 rounded-full bg-secondary-200 w-8 h-8">
                                                             </div>
-                                                            <div class="text-xs font-bold">{{ __('Guest') }}</div>
+                                                            {{-- <div class="text-xs font-bold">{{ __('Guest') }}</div> --}}
                                                         </div>
                                                         {{-- <div>
                                                             <x-atoms.avatar size="small"
@@ -90,7 +90,7 @@
                         <div wire:loading.remove wire:target="create()"
                             class="relative h-full flex flex-col items-center justify-center space-y-4">
                             <div class="flex justify-center flex-col items-center space-y-4">
-                                <img src="{{ asset('image/metropole_nice.jpg') }}"
+                                <img src="{{ asset('Images/Fichier-11.png') }}"
                                     class="h-full w-full object-cover max-h-12 rounded-xl">
                                 <div class="text-lg font-medium text-secondary-700">
                                     {{ __('How can I help you?') }}
