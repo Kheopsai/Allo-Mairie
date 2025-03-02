@@ -4,6 +4,7 @@
     </x-slot>
 
     <div>
+            @can('create',App\Models\Source::class)
         <x-card card-classes="bg-white border border-secondary-200" shadow="shadow-sm">
             <x-slot:title class="space-y-2">
                 <div class="text-sm">
@@ -18,6 +19,7 @@
 
                 </div>
             </x-slot:action>
+
             <div class="grid grid-cols-4">
                 <div class="col-span-3 text-sm">
                     <h1>{{ __('Simplify your workflow with intelligent hub detection that automatically assigns each source to the most relevant hub.') }}
@@ -33,6 +35,7 @@
                 </div>
             </div>
         </x-card>
+            @endcan
     </div>
     <div class="space-y-4">
         <div>
@@ -62,8 +65,8 @@
                         <div class="absolute right-0 p-6 flex justify-end z-10 items-center">
                             <div class="flex items-center">
                                 <x-dropdown class="w-56">
-                                    <x-dropdown.item wire:click="edit({{$hub->id}})" icon="pencil"
-                                                     label="{{ __('Edit') }}"/>
+                                    {{-- <x-dropdown.item wire:click="edit({{$hub->id}})" icon="pencil"
+                                                     label="{{ __('Edit') }}"/> --}}
                                     <x-dropdown.item wire:click="deleteConfirmation({{ $hub->id }})" icon="trash"
                                                      label="{{ __('Delete') }}"/>
                                 </x-dropdown>

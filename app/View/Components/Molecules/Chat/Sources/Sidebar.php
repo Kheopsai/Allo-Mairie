@@ -33,7 +33,8 @@ class Sidebar extends Component
 
     public function newChannel(): void
     {
-        $this->reset();
+        $this->createNewChannel();
+        $this->dispatch('loadMessages');
         $this->dispatch('resetAll')->component(Index::class);
     }
 

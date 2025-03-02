@@ -14,6 +14,9 @@ class PolicyServiceProvider extends AuthServiceProvider
         \App\Models\Permission::class => \App\Policies\PermisssionPolicy::class,
         \App\Models\User::class => \App\Policies\UserPolicy::class,
         \App\Models\Tenant::class => \App\Policies\TenantPolicy::class,
+        \App\Models\Chat::class => \App\Policies\ChatPolicy::class,
+        \App\Models\Source::class => \App\Policies\SourcePolicy::class,
+        \App\Models\Hub::class => \App\Policies\HubPolicy::class,
     ];
 
     /**

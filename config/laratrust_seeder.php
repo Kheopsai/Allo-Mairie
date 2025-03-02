@@ -31,6 +31,25 @@ return [
         ],
     ],
 
+    'tenant_roles_structure' => [
+        RoleEnum::Admin => [
+            'user' => 'i,c,r,u,d',
+            'company' => 'c,r,u,d',
+            'hub' => 'i,c,r,u,d',
+            'chat' => 'i,c,r,u,d',
+            'source' => 'i,c,r,u,d',
+            'permission' => 'i,c',
+            'role' => 'i,c,r,u,d',
+            'profile' => 'i,r,u',
+        ],
+        RoleEnum::User => [
+            'hub' => 'i,c,r',
+            'source' => 'i,c,r',
+            'chat' => 'i,c,r',
+            'profile' => 'r,u',
+        ],
+    ],
+
     'permissions_map' => [
         'i' => 'index',
         'c' => 'create',

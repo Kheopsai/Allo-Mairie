@@ -28,6 +28,7 @@ class Create extends ModalComponent
     public function save(): void
     {
         $this->validate();
+        $this->authorize('create',Hub::class);
         Hub::create([
             'name' => $this->name,
             'user_id' => Auth::id(),

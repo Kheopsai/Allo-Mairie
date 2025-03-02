@@ -40,7 +40,7 @@ class DocumentsProcessListener implements ShouldQueue
         try {
 
             $data = $this->prepareData($event);
-            $this->getContentAndTags($source);
+            $this->getContentAndTags($source, $event->user_id);
 
             $beforeCommit = function (string $name) use ($source): void {
                 $source->update(['job_batch_id' => $name]);
@@ -62,6 +62,8 @@ class DocumentsProcessListener implements ShouldQueue
                     finalCallback: $serializedFinalCallback
                 );
             }
+
+            Livewire::dispatch('refreshDirectories');
         } catch (Throwable $e) {
             Log::error('Document Processing Error: ' . $e->getMessage());
             throw $e;
@@ -96,16 +98,16 @@ class DocumentsProcessListener implements ShouldQueue
         return storage_path('app/' . $model->file->filepath);
     }
 
-    public function getContentAndTags($source)
+    public function getContentAndTags($source, $user_id)
     {
         $textExtractor = new TextExtractor;
         $content = $textExtractor->extractText($this->getFile($source));
         $stupidContext = $this->generateContent($content);
-        $tags=$this->getTags($stupidContext);
+        $tags = $this->getTags($stupidContext);
         $source->syncTags($tags);
-        $summary= $this->getSummarize($stupidContext);
-        $source->update(['content'=> $summary]);
-        $this->getHub($source);
+        $summary = $this->getSummarize($stupidContext);
+        $source->update(['content' => $summary]);
+        $this->getHub($source, $user_id);
     }
 
 
@@ -117,13 +119,13 @@ class DocumentsProcessListener implements ShouldQueue
     }
 
 
-    public function getHub($source)
+    public function getHub($source, $user_id)
     {
         if (!$source->hub_id) {
 
-            $hub_id = CategoriesExtraction::run($source->content);
-            if($hub_id)
-            $source->update(['hub_id'=> $hub_id]);
+            $hub_id = CategoriesExtraction::run($source->content, $user_id);
+            if ($hub_id)
+                $source->update(['hub_id' => $hub_id]);
         }
     }
 

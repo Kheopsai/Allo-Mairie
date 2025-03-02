@@ -38,6 +38,7 @@ trait HasActionResource
             foreach ($selectedIds as $itemId) {
                 $topic = $this->model::find($itemId);
                 if ($topic) {
+                    auth()->user()->can('delete', $topic);
                     $topic->delete();
                 }
             }
@@ -49,6 +50,7 @@ trait HasActionResource
         } else {
             $topic = $this->model::find($id);
             if ($topic) {
+                auth()->user()->can('delete', $topic);
                 $topic->delete();
                 $this->notification()->error(
                     $title = trans('Action status'),
@@ -73,20 +75,20 @@ trait HasActionResource
 
     public function getDefaultDeleteAction(): array
     {
-        return[
-                'label' => trans('Delete'),
-                'icon' => 'trash',
-                'action' => 'deleteConfirmation',
-            ];
+        return [
+            'label' => trans('Delete'),
+            'icon' => 'trash',
+            'action' => 'deleteConfirmation',
+        ];
     }
 
 
     public function getDefaultEditAction(): array
     {
-        return[
-                'label' => trans('Edit'),
-                'icon' => 'pencil',
-                'action' => 'edit',
-            ];
+        return [
+            'label' => trans('Edit'),
+            'icon' => 'pencil',
+            'action' => 'edit',
+        ];
     }
 }

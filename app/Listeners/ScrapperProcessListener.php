@@ -22,6 +22,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Livewire\Livewire;
 
 class ScrapperProcessListener implements ShouldQueue
 {
@@ -61,21 +62,23 @@ class ScrapperProcessListener implements ShouldQueue
             Source::findOrFail($id)->update(['status' => StatusEnum::SUCCESS]);
         }
 
-        $this->getContentAndTags($id,$content);
+        $this->getContentAndTags($id,$content,$event->user_id);
+
+        Livewire::dispatch('refreshDirectories');
     }
 
 
-    public function getHub($source)
+    public function getHub($source,$user_id)
     {
         if (!$source->hub_id) {
 
-            $hub_id = CategoriesExtraction::run($source->content);
+            $hub_id = CategoriesExtraction::run($source->content,$user_id);
             if($hub_id)
             $source->update(['hub_id'=> $hub_id]);
         }
     }
 
-    public function getContentAndTags($id,$content)
+    public function getContentAndTags($id,$content,$user_id)
     {
 
         $source = Source::findOrFail($id);
@@ -83,7 +86,7 @@ class ScrapperProcessListener implements ShouldQueue
         $source->syncTags($tags);
         $summary= $this->getSummarize($content);
         $source->update(['content'=> $summary]);
-        $this->getHub($source);
+        $this->getHub($source,$user_id);
     }
 
 
@@ -143,8 +146,8 @@ class ScrapperProcessListener implements ShouldQueue
     //     Source::findOrFail($id)->update(['status' => StatusEnum::ERROR]);
     // }
 
-    public function middleware(ScrapperProcessEvent $event)
-    {
-        return [new AuthenticateQueuesMiddleware($event->user_id)];
-    }
+    // public function middleware(ScrapperProcessEvent $event)
+    // {
+    //     return [new AuthenticateQueuesMiddleware($event->user_id)];
+    // }
 }

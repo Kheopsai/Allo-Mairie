@@ -35,7 +35,7 @@ return [
         |           This method doesn't support cache yet.
         | - class that extends Laratrust\Checkers\User\UserChecker
         */
-        'user' => 'default',
+        'user' => 'query',
 
         /*
         |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return [
         |          This method doesn't support cache yet.
         | - class that extends Laratrust\Checkers\Role\RoleChecker
         */
-        'role' => 'default',
+        'role' => 'query',
     ],
 
     /*

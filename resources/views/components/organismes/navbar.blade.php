@@ -1,5 +1,6 @@
 <header class="w-full bg-white border-b border-secondary-200 dark:bg-black dark:border-secondary-950">
-    <div {{ $attributes->merge(['class' => "relative z-10 flex flex-shrink-0 py-4"]) }}>
+    {{-- <div {{ $attributes->merge(['class' => "relative z-10 flex flex-shrink-0 py-4"]) }} class="relative z-10 flex flex-shrink-0 py-4"> --}}
+    <div class="relative z-10 flex flex-shrink-0 py-4">
         <x-button flat icon="bars-3-bottom-left" lg @click="open = true" class="block md:hidden focus:outline-none"/>
         <div class="flex justify-between flex-1 px-8">
             <div class="flex items-center flex-1 px-2">
@@ -8,11 +9,11 @@
             <div class="flex items-center ml-2 space-x-4 sm:ml-6 sm:space-x-6">
                 @auth
                     @if (tenant())
-                        <div class="text-sm p-2 flex space-x-2 items-center dark:text-secondary-300">
+                        <div class="text-sm p-2 flex space-x-2 items-center dark:text-secondary-300" onclick="Livewire.dispatch('openModal',{component: 'modal.tenant.backend.product.billing'})">
                             <div>
                                 <x-lucide-hand-coins class="h-4 text-yellow-400"/>
                             </div>
-                            <div>
+                            <div wire:poll >
                                 {{ auth()->user()->credit }}
                             </div>
                         </div>

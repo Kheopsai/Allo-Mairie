@@ -21,6 +21,7 @@ class Index extends FormComponent
 
     public $roles;
     public $selectedPermissions = [];
+    public $assignAllPermissions = [];
 
     public function mount()
     {
@@ -34,8 +35,18 @@ class Index extends FormComponent
         foreach ($this->roles as $key => $role) {
             foreach ($role->permissions->pluck('name')->toArray() as $key => $permission) {
                 $parts = explode('-', $permission);
+                $this->selectedPermissions[$role->id][$permission] = true;
+            }
+        }
+    }
 
-                $this->selectedPermissions[$role->id][$parts[0]][$parts[1]] = true;
+    public function updatedAssignAllPermissions($id,$value)
+    {
+        foreach ($this->assignAllPermissions as $key => $role) {
+
+            $permissions = $this->getPermissionsProperty()->only(array_keys($role));
+            foreach ($permissions as $permission) {
+                $this->selectedPermissions[$key][$permission] = true;
             }
         }
     }
@@ -66,18 +77,17 @@ class Index extends FormComponent
 
     public function save()
     {
-        $this->authorize('assign',Permission::class);
-            foreach ($this->selectedPermissions as $role => $permissions) {
-                $role = Role::find($role);
-                $synced = [];
-                foreach ($this->hyphen($permissions) as $permission => $check) {
-                    if ($check) {
-                        $synced[] = $permission;
-                    }
+        $this->authorize('assign', Permission::class);
+        foreach ($this->selectedPermissions as $role => $permissions) {
+            $role = Role::find($role);
+            $synced = [];
+            foreach ($this->hyphen($permissions) as $permission => $check) {
+                if ($check) {
+                    $synced[] = $permission;
                 }
-                $role->syncPermissions($synced);
             }
-
+            $role->syncPermissions($synced);
+        }
     }
 
     public function setRedirectAfterActionRoute(?string $route = null): string

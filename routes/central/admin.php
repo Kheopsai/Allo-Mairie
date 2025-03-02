@@ -27,6 +27,12 @@ Route::namespace('Backend')->middleware(['auth'])->group(function(){
 
     });
 
+    Route::namespace('Product')->prefix('product')->as('product.')->group(function(){
+        Route::get('',Index::class)->name('index');
+        Route::get('/create',Create::class)->name('create');
+        Route::get('/update/{product}',Update::class)->name('update');
+    });
+
     Route::namespace('Role')->prefix('role')->as('role.')->group(function(){
         Route::get('',Index::class)->name('index')->middleware('can:viewAny,App\Models\Role');
     });

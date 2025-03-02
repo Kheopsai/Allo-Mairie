@@ -58,7 +58,7 @@ class Create extends ModalComponent
     public $content;
 
 
-    #[Validate('sometimes','url')]
+    #[Validate('sometimes', 'url')]
     public $url;
 
     public function boot(): void
@@ -70,7 +70,7 @@ class Create extends ModalComponent
 
     public function mount(?Hub $hub)
     {
-       $this->hub=$hub;
+        $this->hub = $hub;
     }
 
 
@@ -101,8 +101,6 @@ class Create extends ModalComponent
     public function updatedFile(): void
     {
         $this->validateFile();
-        $this->js('$wire.getContentAndTags()');
-        $this->loadContent();
     }
 
     public function loadContent(): void
@@ -110,78 +108,29 @@ class Create extends ModalComponent
         $this->loadContent = ! $this->loadContent;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function getContentAndTags(): void
-    {
-
-        try {
-            $content = $this->textExtractor->extractText($this->file->getRealPath());
-            $stupidContext = $this->generateContent($content);
-            $this->getTags($stupidContext);
-            $this->getSummarize($stupidContext);
-            $this->loadContent();
-        } catch (Exception $exception) {
-            Log::info($exception->getMessage());
-            $this->loadContent();
-        }
-    }
 
     public function validateFile(): void
     {
-        if ($this->file) {
+        if ($this->value=="file") {
             $this->validate([
-                'file' => ['required', 'file'],
+                'file' => ['required', 'file', "mimes:pdf,doc,docx,txt,pptx,xls,xlsx"],
             ]);
         }
     }
-
-    /**
-     * @throws Exception
-     */
-    public function getSummarize($context): void
+    public function validateUrl():void
     {
-        $prompt = $this->summaryExractor->handle($context);
-        $this->content = $this->getResponse($prompt, 100);
+        if($this->value=="url"){
+            $this->validate(['url'=>'required|url']);
+        }
     }
 
-    /**
-     * @throws Exception
-     */
-    public function getTags($context): void
-    {
-        $rake = new Rake(4, false);
-        $this->tags = $rake->extract($context)->sortByScore('desc')->keywords();
-    }
 
     public function estimateTokenCount($text): float
     {
         return ceil(strlen($text) / 2);
     }
 
-    public function concatenateContextsWithLimit(array $contexts, $maxTokens = 4700): string
-    {
-        $concatenatedContext = '';
-        $currentTokenCount = 0;
-        foreach ($contexts as $context) {
-            $context = preg_replace('/\s+/', ' ', trim($context));
-            $contextTokenCount = $this->estimateTokenCount($context);
-            if ($currentTokenCount + $contextTokenCount > $maxTokens) {
-                break;
-            }
 
-            $concatenatedContext .= $context . "\n";
-            $currentTokenCount += $contextTokenCount;
-        }
-
-        return trim($concatenatedContext);
-    }
-
-    public function generateContent($content): string
-    {
-        return $this->concatenateContextsWithLimit($content);
-    }
 
     /**
      * @throws Exception
@@ -196,14 +145,15 @@ class Create extends ModalComponent
     public function save(): void
     {
         $this->validate();
+        $this->validateUrl();
         $this->validateFile();
         $source = new Source();
         $source->name = $this->name;
         $source->content = $this->content;
         $source->user_id = Auth::id();
-        if($this->hub)
-        $source->hub_id = $this->hub->id;
-        $source->type= $this->value;
+        if ($this->hub)
+            $source->hub_id = $this->hub->id;
+        $source->type = $this->value;
         $source->save();
         $source->syncTags($this->tags);
         switch ($this->value) {
@@ -212,10 +162,10 @@ class Create extends ModalComponent
                 $this->addToRessources($source);
                 break;
             case 'text':
-                ContentProcessEvent::dispatch($source->id, tenant()->id, $this->content,Auth::id());
+                ContentProcessEvent::dispatch($source->id, tenant()->id, $this->content, Auth::id());
                 break;
             case 'url':
-                ScrapperProcessEvent::dispatch($source->id,$this->url,Auth::id());
+                ScrapperProcessEvent::dispatch($source->id, $this->url, Auth::id());
                 break;
         }
         $this->dispatch('refreshDatatable');
@@ -229,7 +179,7 @@ class Create extends ModalComponent
     public function addToRessources($source): void
     {
         $source->addFile($this->file)->in('tmp')->on('local')->save();
-        DocumentProcessEvent::dispatch(tenant(),$source,Auth::id());
+        DocumentProcessEvent::dispatch(tenant(), $source, Auth::id());
     }
 
     public function render()

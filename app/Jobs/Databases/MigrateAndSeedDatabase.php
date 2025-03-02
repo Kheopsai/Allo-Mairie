@@ -4,14 +4,15 @@ namespace App\Jobs\Databases;
 
 use App\Enums\RoleEnum;
 use App\Enums\TenantEnum;
-use App\Models\Role;
 use App\Models\SyncedUser;
+use Database\Seeders\TenantLaratrustSeeder;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +25,7 @@ use Throwable;
 class MigrateAndSeedDatabase implements ShouldBeUnique, ShouldQueue
 {
     use CentralConnection;
-    use Dispatchable,InteractsWithQueue, Queueable,SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected TenantWithDatabase $tenant;
     /**
@@ -32,7 +33,7 @@ class MigrateAndSeedDatabase implements ShouldBeUnique, ShouldQueue
      */
     public function __construct(TenantWithDatabase $tenant)
     {
-        $this->tenant=$tenant;
+        $this->tenant = $tenant;
     }
 
     /**
@@ -53,9 +54,8 @@ class MigrateAndSeedDatabase implements ShouldBeUnique, ShouldQueue
             $this->seedTenantDatabase();
 
             $this->tenant->update(['status' => TenantEnum::Active()]);
-
         } catch (Throwable $exception) {
-            Log::error("the error message is ".$exception->getMessage());
+            Log::error("the error message is " . $exception->getMessage());
             $this->resetConnection();
             throw $exception;
         } finally {
@@ -64,7 +64,7 @@ class MigrateAndSeedDatabase implements ShouldBeUnique, ShouldQueue
         }
     }
 
-        /**
+    /**
      * Check if the database exists.
      *
      * @throws DatabaseManagerNotRegisteredException
@@ -115,10 +115,13 @@ class MigrateAndSeedDatabase implements ShouldBeUnique, ShouldQueue
 
         if ($metropole && $user = $metropole->users()->latest()->first()) {
             $this->tenant->run(function () use ($user) {
-                Role::firstOrCreate(
-                    ['name' => RoleEnum::Admin],
-                    ['display_name' => ucfirst(RoleEnum::Admin)]
-                );
+                Artisan::call('db:seed', [
+                    '--class' => TenantLaratrustSeeder::class, // Change to your seeder name
+                ]);
+                // Role::firstOrCreate(
+                //     ['name' => RoleEnum::Admin],
+                //     ['display_name' => ucfirst(RoleEnum::Admin)]
+                // );
 
                 $attributes = $user->getAttributes();
                 $tenantUser = new SyncedUser($attributes);

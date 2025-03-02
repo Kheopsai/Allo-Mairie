@@ -35,6 +35,7 @@ class Index extends Component
 
     public function confirmDelete(Hub $hub): void
     {
+        $this->authorize('delete',$hub);
         $hub->delete();
         $this->refreshDirectories();
         $this->notification()->error(
@@ -51,11 +52,13 @@ class Index extends Component
 
     public function add(): void
     {
+        $this->authorize('create',Hub::class);
         $this->dispatch('openModal', 'modal.tenant.backend.hub.create');
     }
 
     public function show($hub_id): void
     {
+        $this->authorize('view',Hub::find($hub_id));
         redirect()->route('hub.show',['hub'=> $hub_id]);
     }
 

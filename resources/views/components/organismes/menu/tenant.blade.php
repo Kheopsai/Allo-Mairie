@@ -20,6 +20,5 @@
 
             </div>
         @endforeach
-    <livewire:components.molecules.chat.sources.sidebar />
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasImage;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Stancl\Tenancy\Database\Concerns\CentralConnection;
 use Stancl\VirtualColumn\VirtualColumn;
 

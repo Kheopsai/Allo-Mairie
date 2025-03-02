@@ -17,7 +17,8 @@ class SyncedUserObserver
         $credits = Credit::create([
             'user_id' => $user->id,
             'total_credits' => $baseCredits,
-            'available_credits' => $baseCredits,
+            'monthly_credit'=> $baseCredits,
+            // 'available_credits' => $baseCredits,
         ]);
         CreditTransactions::create([
             'credit_id' => $credits->id,

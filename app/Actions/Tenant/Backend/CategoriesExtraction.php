@@ -4,8 +4,8 @@ namespace App\Actions\Tenant\Backend;
 
 use App\Facade\LlmManagerFacade;
 use App\Models\Hub;
+use App\Models\User;
 use App\Services\CategoriesExtractor\CategoriesExtractor;
-use Illuminate\Support\Facades\Auth;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class CategoriesExtraction
@@ -19,7 +19,7 @@ class CategoriesExtraction
         $this->categoriesExtractor = new CategoriesExtractor;
     }
 
-    public function handle($content,$chat=false)
+    public function handle($content,$user_id,$chat=false)
     {
 
         $data = Hub::select('id', 'name')->get();
@@ -39,7 +39,8 @@ class CategoriesExtraction
         if ( $category->id ==="new") {
             if($chat)
             return 0;
-            $newCategory = Hub::create(['name' => $category->name, 'user_id' => Auth::id()]);
+            User::find($user_id)->can('create',Hub::class);
+            $newCategory = Hub::create(['name' => $category->name, 'user_id' => $user_id]);
             return $newCategory->id;
         } else
             return $category?->id;

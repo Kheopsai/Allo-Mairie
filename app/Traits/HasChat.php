@@ -32,7 +32,7 @@ trait HasChat
 
     public bool $isStart = true;
 
-    public string $message='';
+    public string $message = '';
 
     public string $generatedMessage;
 
@@ -100,6 +100,11 @@ trait HasChat
         return $chat;
     }
 
+    public function buildPrompt($prompt): void
+    {
+        $this->message = $prompt;
+    }
+
     private function createNewChannel(): void
     {
         if (empty($this->channel)) {
@@ -128,7 +133,7 @@ trait HasChat
     #[On('chat')]
     public function createMessage(): void
     {
-        if(empty($this->message))return ;
+        if (empty($this->message)) return;
         $this->dispatchSummaryExtractor($this->message);
         $this->buildContext();
         $this->toggleLoading();
@@ -175,7 +180,7 @@ trait HasChat
         }
         $embedding = Embedding::handle($this->message);
 
-        $hub_id = CategoriesExtraction::run($this->message,true);
+        $hub_id = CategoriesExtraction::run($this->message,Auth::id(), true);
 
         if ($hub_id)
             $contexts = Hub::findOrFail($hub_id)->vectorStores()->nearestNeighbors('embedding', $embedding, Distance::Cosine)->get()->toArray();

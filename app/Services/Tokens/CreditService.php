@@ -2,6 +2,7 @@
 
 namespace App\Services\Tokens;
 
+use App\Enums\CreditEnum;
 use App\Interface\LlmServiceProviderInterface;
 use App\Models\CreditTransactions;
 use App\Models\SyncedUser;
@@ -38,10 +39,17 @@ class CreditService
     /**
      * @throws Throwable
      */
-    public function addCredits(User|SyncedUser $user, int $amount)
+    public function addCredits(User|SyncedUser $user, int $amount,$creditType= CreditEnum::Permanent)
     {
-        return DB::transaction(function () use ($user, $amount) {
-            $user->credits->available_credits += $amount;
+        return DB::transaction(function () use ($user, $amount,$creditType) {
+            switch($creditType){
+                case CreditEnum::Permanent:
+                    $user->credits->permanent_credit += $amount;
+                break;
+                case CreditEnum::Monthly:
+                    $user->credits->monthly_credit += $amount;
+                break;
+            }
             $user->credits->total_credits += $amount;
             $user->credits->save();
 

@@ -21,6 +21,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Livewire\Livewire;
 use Throwable;
 
 class ContentProcessListener implements ShouldQueue
@@ -66,13 +67,14 @@ class ContentProcessListener implements ShouldQueue
         $tags = $this->getTags($this->tagExtractor->handle($text));
         $this->getHub($event);
         Source::findOrFail($id)->syncTags($tags);
+        Livewire::dispatch('refreshDirectories');
     }
 
     public function getHub(ContentProcessEvent $event)
     {
         if (!Source::findOrFail($event->id)->hub_id) {
 
-            $hub_id = CategoriesExtraction::run($event->text);
+            $hub_id = CategoriesExtraction::run($event->text,$event->user_id);
             if($hub_id)
             Source::findOrFail($event->id)->update(['hub_id'=> $hub_id]);
         }

@@ -58,12 +58,36 @@ class StripeService implements PaymentInterface
     /**
      * @throws ApiErrorException
      */
-    public function createPrice(string $currency, float $amount, string $interval, string $product_id)
+    public function createPrice(string $currency, float $amount, ?string $interval, string $product_id)
     {
+        if($interval)
         return $this->stripe->prices->create([
             'currency' => $currency,
             'unit_amount' => $amount * 100,
             'recurring' => ['interval' => $interval],
+            'product' => $product_id,
+        ]);
+
+        return $this->stripe->prices->create([
+            'currency' => $currency,
+            'unit_amount' => $amount * 100,
+            'product' => $product_id,
+        ]);
+    }
+
+    public function updatePrice(string $price_id, string $currency, float $amount, ?string $interval, string $product_id){
+
+        if($interval)
+        return $this->stripe->prices->update($price_id,[
+            'currency' => $currency,
+            'unit_amount' => $amount * 100,
+            'recurring' => ['interval' => $interval],
+            'product' => $product_id,
+        ]);
+
+        return $this->stripe->prices->update($price_id,[
+            'currency' => $currency,
+            'unit_amount' => $amount * 100,
             'product' => $product_id,
         ]);
     }

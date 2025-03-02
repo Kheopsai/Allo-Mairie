@@ -1,9 +1,9 @@
 @use(App\Enums\ChatType)
 @use(Carbon\Carbon)
 <div class="flex relative grow h-full bg-gradient-to-tl from-primary-100 via-white" x-data="{ open: true, side: false }">
-    {{-- <livewire:components.molecules.chat.sources.sidebar /> --}}
+    <livewire:components.molecules.chat.sources.sidebar />
     <main class="w-full flex flex-col space-y-4 relative z-0">
-        <div class="!m-0 max-h-[80vh] flex flex-col h-full">
+        <div class="!m-0 max-h-[70vh] flex flex-col h-full">
             <div x-auto-scroll class="flex-1 flex flex-col grow pl-8 py-8 overflow-y-auto soft-scrollbar h-full">
                 <div class="flex-1 w-full flex flex-col pr-6 max-w-screen-md mx-auto">
                     @forelse($this->groupedChats() as $date => $messages)
@@ -32,14 +32,14 @@
                                                 <div class="flex space-x-4 items-center">
                                                     <div class="flex space-x-2 items-center">
                                                         <div class="flex space-x-4 items-center">
-                                                            <div class="p-2 rounded-full bg-secondary-200 w-8 h-8">
-                                                            </div>
+                                                            {{-- <div class="p-2 rounded-full bg-secondary-200 w-8 h-8">
+                                                            </div> --}}
                                                             {{-- <div class="text-xs font-bold">{{ __('Guest') }}</div> --}}
                                                         </div>
-                                                        {{-- <div>
+                                                        <div>
                                                             <x-atoms.avatar size="small"
                                                                 image="{{ auth()->user()->profile_photo_url }}" />
-                                                        </div> --}}
+                                                        </div>
                                                         <div class="text-xs font-bold">
                                                             {{ auth()->user()->full_name }}
                                                         </div>
@@ -188,7 +188,7 @@
                     <div class="pt-12 flex items-center justify-center">
                         <div class="flex flex-col justify-center items-center space-y-2">
                             <div class="h-12 w-12">
-                                <img src="{{asset('image/logo-kheops.svg')}}" class="h-full w-full object-cover rounded-full">
+                                <img src="{{ tenant()->setting->image()->original_url }}" class="h-full w-full object-cover rounded-full">
                             </div>
                             <div class="text-lg font-semibold leading-relaxed" x-show="open">
                                 <div>Allo-Mairie <span class="text-sm font-light">AI</span></div>

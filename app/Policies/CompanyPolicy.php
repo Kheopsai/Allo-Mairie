@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Metropole;
+use App\Models\SyncedUser;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -21,12 +22,12 @@ class CompanyPolicy
         return $user->hasPermission('company-create');
     }
 
-    public function update(User $user,Metropole $company)
+    public function update(User|SyncedUser $user,Metropole $company)
     {
         return $user->hasPermission('company-update');
     }
 
-    public function delete(User $user,Metropole $company)
+    public function delete(User|SyncedUser $user,Metropole $company)
     {
         return $user->hasPermission('company-delete');
     }

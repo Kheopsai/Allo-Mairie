@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->unique();
             $table->unsignedBigInteger('total_credits')->default(0);
             $table->unsignedBigInteger('available_credits')->default(0);
+            $table->unsignedBigInteger('monthly_credit')->default(0);
+            $table->unsignedBigInteger('permanent_credit')->default(0);
             $table->timestamps();
         });
     }

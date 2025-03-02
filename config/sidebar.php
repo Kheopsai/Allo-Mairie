@@ -37,21 +37,27 @@ return [
 
             [
                 'label' => 'Plans',
-                'icon' => 'users',
+                'icon' => 'banknotes',
                 'route' => 'plan.index'
-            ],
-        ],
-        'Roles And Permissions'=>[
-            [
-                'label'=> 'Roles',
-                'icon' => 'shield-check',
-                'route'=>'role.index'
             ],
 
             [
-                'label'=> 'Permissions',
+                'label' => 'Products',
+                'icon' => 'currency-dollar',
+                'route' => 'product.index'
+            ],
+        ],
+        'Roles And Permissions' => [
+            [
+                'label' => 'Roles',
+                'icon' => 'shield-check',
+                'route' => 'role.index'
+            ],
+
+            [
+                'label' => 'Permissions',
                 'icon' => 'key',
-                'route'=>'permission.index'
+                'route' => 'permission.index'
             ]
         ],
 
@@ -82,6 +88,15 @@ return [
                 'icon' => 'circle-stack',
                 'route' => 'hub.index'
             ]
+        ],
+
+        'Settings' => [
+
+            [
+                'label' => 'Settings',
+                'icon' => 'cog-6-tooth',
+                'route' => 'settings.index'
+            ],
         ]
     ]
 ];
