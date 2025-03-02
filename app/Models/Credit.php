@@ -26,29 +26,62 @@ class Credit extends Model
 
         // Update total when column_a or column_b changes
         static::saving(function ($model) {
-            $model->available_credits = $model->monthly_credit + $model->permanent_credit;
-        });
 
-        // When total is updated manually, adjust column_a and column_b
-        static::updating(function ($model) {
-            ds('subtracting');
             if ($model->isDirty('available_credits')) {
-                $difference = $model->available_credits - $model->getOriginal('available_credits');
+                $originalCredits = $model->getOriginal('available_credits') ?? 0;
+                $newCredits = $model->available_credits;
+                $difference = $newCredits - $originalCredits;
 
-                ds($difference);
-                if ($difference < 0) { // Subtraction case
-                    // Prioritize subtraction from column_b, then column_a
+                if ($difference < 0) { // Only adjust when subtracting credits
                     $absDiff = abs($difference);
 
+                    // Deduct from monthly_credit first, then permanent_credit
                     if ($model->monthly_credit >= $absDiff) {
                         $model->monthly_credit -= $absDiff;
                     } else {
                         $remaining = $absDiff - $model->monthly_credit;
                         $model->monthly_credit = 0;
-                        $model->permanent_credit -= $remaining;
+
+                        if ($model->permanent_credit >= $remaining) {
+                            $model->permanent_credit -= $remaining;
+                        }
                     }
+
+                    // Ensure available_credits remains consistent
                 }
             }
+            $model->available_credits = $model->monthly_credit + $model->permanent_credit;
+            // $model->available_credits = $model->monthly_credit + $model->permanent_credit;
         });
+
+        // When total is updated manually, adjust column_a and column_b
+        // static::updating(function ($model) {
+        //     if ($model->isDirty('available_credits')) {
+        //         $originalCredits = $model->getOriginal('available_credits') ?? 0;
+        //         $newCredits = $model->available_credits;
+        //         $difference = $newCredits - $originalCredits;
+
+        //         if ($difference < 0) { // Only adjust when subtracting credits
+        //             $absDiff = abs($difference);
+
+        //             // Deduct from monthly_credit first, then permanent_credit
+        //             if ($model->monthly_credit >= $absDiff) {
+        //                 $model->monthly_credit -= $absDiff;
+        //             } else {
+        //                 $remaining = $absDiff - $model->monthly_credit;
+        //                 $model->monthly_credit = 0;
+
+        //                 if ($model->permanent_credit >= $remaining) {
+        //                     $model->permanent_credit -= $remaining;
+        //                 } else {
+        //                     throw new \Exception('Not enough credits to deduct.'); // Prevents negative values
+        //                 }
+        //             }
+
+        //             // Ensure available_credits remains consistent
+        //             $model->available_credits = $model->monthly_credit + $model->permanent_credit;
+        //         }
+        //     }
+        // });
     }
 }

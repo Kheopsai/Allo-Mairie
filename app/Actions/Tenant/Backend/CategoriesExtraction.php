@@ -33,6 +33,7 @@ class CategoriesExtraction
         $prompt = $this->categoriesExtractor->handle($content, $jsonstring);
         $response = LlmManagerFacade::build(config('llm.config'));
         $result = $response->getResponse($prompt);
+        $jsonContent='';
         if (preg_match('/\{.*?\}/', $result, $matches))
             $jsonContent = $matches[0];
         $category = json_decode($jsonContent);

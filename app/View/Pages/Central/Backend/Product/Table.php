@@ -41,18 +41,18 @@ class Table extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Name", "name")
+            Column::make(trans("Name"), "name")
                 ->sortable(),
-            Column::make("Description", "description")
+            Column::make(trans("Description"), "description")
                 ->sortable(),
-            Column::make("Price", "id")
+            Column::make(trans("Price"), "id")
                 ->format(function($id){
                     return Product::find($id)->price;
                 })
                 ->sortable(),
-            Column::make("Value", "value")
+            Column::make(trans("Value"), "value")
                 ->sortable(),
-            Column::make("Created at", "created_at")
+            Column::make(trans("Created at"), "created_at")
                 ->sortable(),
         ];
     }

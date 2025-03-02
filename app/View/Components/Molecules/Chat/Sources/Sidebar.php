@@ -7,11 +7,13 @@ use App\Traits\HasChat;
 use App\View\Pages\Tenant\Backend\Chat\Index;
 use Livewire\Attributes\Isolate;
 use Livewire\Component;
+use WireUi\Traits\WireUiActions;
 
 #[Isolate]
 class Sidebar extends Component
 {
 
+    use WireUiActions;
     use HasChat;
 
     public $channels = [];

@@ -27,11 +27,11 @@ class Table extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
-            Column::make("Email", "email")
+            Column::make(trans("Email"), "email")
                 ->sortable(),
-            Column::make("Created at", "created_at")
+            Column::make(trans("Created at"), "created_at")
                 ->sortable(),
-            Column::make("Updated at", "updated_at")
+            Column::make(trans("Updated at"), "updated_at")
                 ->sortable(),
         ];
     }

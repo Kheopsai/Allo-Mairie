@@ -14,16 +14,19 @@ use Laratrust\Contracts\LaratrustUser;
 use Stancl\Tenancy\Contracts\Syncable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laratrust\Traits\HasRolesAndPermissions;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Stancl\Tenancy\Database\Concerns\ResourceSyncing;
 
 #[ObservedBy(SyncedUserObserver::class)]
-class SyncedUser extends Authenticatable implements LaratrustUser, Syncable
+class SyncedUser extends Authenticatable implements LaratrustUser, Syncable, HasMedia
 {
     use HasRolesAndPermissions;
     use CheckConnection;
+    use InteractsWithMedia;
     use ResourceSyncing;
     use HasProfilePhoto;
-    use HasImage;
+    // use HasImage;
 
     public $incrementing = false;
 

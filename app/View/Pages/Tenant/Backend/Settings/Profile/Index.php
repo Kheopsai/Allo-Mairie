@@ -44,7 +44,7 @@ class Index extends Component
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
-        $this->media = $user->bindToDropzone('profile_photo');
+        // $this->media = $user->bindToDropzone('profile_photo');
     }
 
     public function rules(): array
@@ -83,9 +83,8 @@ class Index extends Component
             $user->password = $this->password;
         }
 
-        $user->save();
-
-        $user->syncImage($this->media);
+        $user->addMedia($this->media[0]['path'])->toMediaCollection('profile_photo');
+        // $user->syncImage($this->media);
 
 
         $this->reset('password', 'password_confirmation', 'passwordHasLetter', 'passwordHasMixedCase', 'passwordHasNumber', 'passwordHasSymbol', 'passwordIsMinLength');

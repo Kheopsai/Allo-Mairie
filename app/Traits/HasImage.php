@@ -121,6 +121,7 @@ trait HasImage
                 'tmpFilename' => $media->file_name,
                 'name' => $media->name,
                 'extension' => pathinfo($media->file_name, PATHINFO_EXTENSION),
+                'path' => Storage::disk($media->disk)->path($media->file_name),
                 'temporaryUrl' => $isPreviewable ? Storage::disk($media->disk)->url($media->file_name) : null,
                 'size' => $media->size,
             ];

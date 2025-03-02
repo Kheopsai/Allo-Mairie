@@ -22,7 +22,6 @@ class TenantNotFound
      */
     public function handle(Request $request, Closure $next): Response
     {
-        ds("hello");
         if ($this->isSubdomain($request->getHost())) {
             $domain = $this->makeSubdomain($request->getHost());
         } else {

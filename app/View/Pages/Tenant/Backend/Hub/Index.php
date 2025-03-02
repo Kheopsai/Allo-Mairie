@@ -18,7 +18,7 @@ class Index extends Component
 
     public function mount()
     {
-        $this->hubs = Hub::where('user_id',Auth::id())->get();
+        $this->hubs = Hub::all();
     }
 
     public function deleteConfirmation($id): void

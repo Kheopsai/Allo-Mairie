@@ -23,6 +23,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Laravel\SerializableClosure\Exceptions\PhpVersionNotSupportedException;
+use Livewire\Livewire;
 use Throwable;
 
 class DocumentsProcessListener implements ShouldQueue
@@ -63,7 +64,7 @@ class DocumentsProcessListener implements ShouldQueue
                 );
             }
 
-            Livewire::dispatch('refreshDirectories');
+            // Livewire::dispatch('refreshDirectories');
         } catch (Throwable $e) {
             Log::error('Document Processing Error: ' . $e->getMessage());
             throw $e;

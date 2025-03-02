@@ -53,9 +53,9 @@
                                 <td class="border px-4 py-2">
                                     <div class="col-span-9">
                                         <div>
-                                            <div class="flex space-x-2">
+                                            {{-- <div class="flex space-x-2">
                                                 <x-checkbox wire:model.live="assignAllPermissions.{{ $role->id }}.{{ explode('-', $permission)[0] }}"  label="{{ __('assign all') }}" />
-                                            </div>
+                                            </div> --}}
                                             <div x-show="open" x-cloak class="px-8 py-4 space-y-2" x-transition>
                                                 @foreach ($permissions as $permission)
                                                     <div class="flex space-x-2">

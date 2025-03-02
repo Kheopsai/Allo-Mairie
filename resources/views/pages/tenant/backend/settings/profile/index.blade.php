@@ -4,7 +4,7 @@
     </x-slot>
 
     <div class="grid grid-cols-3">
-        <x-card cardClasses="bg-white col-span-2" shadow="shadow">
+        <x-card class="bg-white col-span-2" shadow="shadow">
             <div class="grid grid-cols-1 gap-8 p-4">
                 <div class="space-y-4">
                     <div>

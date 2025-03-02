@@ -67,7 +67,7 @@ class ContentProcessListener implements ShouldQueue
         $tags = $this->getTags($this->tagExtractor->handle($text));
         $this->getHub($event);
         Source::findOrFail($id)->syncTags($tags);
-        Livewire::dispatch('refreshDirectories');
+        // Livewire::dispatch('refreshDirectories');
     }
 
     public function getHub(ContentProcessEvent $event)

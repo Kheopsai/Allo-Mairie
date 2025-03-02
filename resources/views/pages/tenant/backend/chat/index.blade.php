@@ -188,7 +188,7 @@
                     <div class="pt-12 flex items-center justify-center">
                         <div class="flex flex-col justify-center items-center space-y-2">
                             <div class="h-12 w-12">
-                                <img src="{{ tenant()->setting->image()->original_url }}" class="h-full w-full object-cover rounded-full">
+                                <img src="{{ tenant()->setting?->getFirstMediaUrl() }}" class="h-full w-full object-cover rounded-full">
                             </div>
                             <div class="text-lg font-semibold leading-relaxed" x-show="open">
                                 <div>Allo-Mairie <span class="text-sm font-light">AI</span></div>

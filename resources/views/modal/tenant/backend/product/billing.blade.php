@@ -1,4 +1,4 @@
-<x-card title="{{ __('Pricing Options') }}">
+<x-card title="{{ __('Pricing Options') }}" class="w-screen">
     <x-slot name="action">
         <x-button icon="x-mark" flat wire:click="forceCloseModal()" />
     </x-slot>
@@ -38,14 +38,14 @@
                              (activeIndex === {{ $products->count() - 1 }} && activeIndex - {{ $index }} === 2)"
                             @click="activeIndex = {{ $index }}" :product="$product" />
                     @endforeach
-                    <button
+                    {{-- <button
                         @click="activeIndex = (activeIndex === {{ $products->count() - 1 }}) ? 0 : activeIndex + 1;"
-                        class="absolute right-0 p-3 bg-primary text-white rounded-full">
+                        class="absolute right-0 p-3 bg-primary-400 text-white rounded-full">
                         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
-                    </button>
+                    </button> --}}
                 </div>
             @endempty
         </div>

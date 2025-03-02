@@ -47,7 +47,7 @@ class CreditService
                     $user->credits->permanent_credit += $amount;
                 break;
                 case CreditEnum::Monthly:
-                    $user->credits->monthly_credit += $amount;
+                    $user->credits->monthly_credit = $amount;
                 break;
             }
             $user->credits->total_credits += $amount;

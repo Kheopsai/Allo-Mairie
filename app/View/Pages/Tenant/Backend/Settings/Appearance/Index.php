@@ -37,7 +37,9 @@ class Index extends Component
     public function save(): void
     {
         $this->setting->primary_color = $this->color ?? null;
-        $this->setting->syncImage($this->media);
+        if(!empty(($this->media)))
+        $this->setting->addMedia($this->media[0]['path'])->toMediaCollection();;
+        // $this->setting->syncImage($this->media);
         $this->setting->save();
         $this->notification()->success(
             $title = trans('Informations Updated'),

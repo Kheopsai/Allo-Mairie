@@ -64,7 +64,7 @@ class ScrapperProcessListener implements ShouldQueue
 
         $this->getContentAndTags($id,$content,$event->user_id);
 
-        Livewire::dispatch('refreshDirectories');
+        // Livewire::dispatch('refreshDirectories');
     }
 
 

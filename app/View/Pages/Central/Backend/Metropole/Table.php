@@ -43,11 +43,11 @@ class Table extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
-            Column::make('Name','name'),
-            Column::make('Type','type'),
-            Column::make("Created at", "created_at")
+            Column::make(trans('Name'),'name'),
+            Column::make(trans('Type'),'type'),
+            Column::make(trans("Created at"), "created_at")
                 ->sortable(),
-            Column::make("Updated at", "updated_at")
+            Column::make(trans("Updated at"), "updated_at")
                 ->sortable(),
         ];
     }
