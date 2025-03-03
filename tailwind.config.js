@@ -20,21 +20,20 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                sans: ["Inter var", ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 primary: {
-                    50: "#f0f8ff",
-                    100: "#e0effe",
-                    200: "#bbe0fc",
-                    300: "#7ec8fb",
-                    400: "#3aabf6",
-                    500: "#1091e7",
-                    600: "#0472c5",
-                    700: "#045494",
-                    800: "#084e84",
-                    900: "#0d416d",
-                    950: "#092948",
+                    50: 'var(--primary-50)',
+                    100: 'var(--primary-100)',
+                    200: 'var(--primary-200)',
+                    300: 'var(--primary-300)',
+                    400: 'var(--primary-400)',
+                    500: 'var(--primary-500)',
+                    600: 'var(--primary-600)',
+                    700: 'var(--primary-700)',
+                    800: 'var(--primary-800)',
+                    900: 'var(--primary-900)',
                 },
                 secondary: colors.slate,
                 positive: colors.emerald,

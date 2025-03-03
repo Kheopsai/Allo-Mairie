@@ -5,8 +5,8 @@
         {{ $product->name }}
         </p>
     </div>
-    <h3 class="font-heading font-bold sm:text-6xl text-7xl text-gray-900">{{ $product->price ."€" }}</h3>
-    <p class="mb-12 text-gray-500">{{ $product->value . __(' credits')}} </p>
+    <h3 class="font-heading font-bold sm:text-6xl text-7xl text-gray-900">{{ $product->value . __(' credits')}}</h3>
+    <p class="mb-12 text-gray-500">{{ $product->price ."€" }} </p>
     <x-button label="{{ __('Buy') }}" primary rounded-md md  wire:click="save({{ $product->id }})"/>
 </div>
 {{-- <div

@@ -22,17 +22,28 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         using: function () {
             foreach (config('tenancy.central_domains', []) as $domain) {
+                Route::prefix('api')
+                    ->domain($domain)
+                    ->middleware('api')
+                    ->group(base_path('routes/api.php'));
+            }
+            foreach (config('tenancy.central_domains', []) as $domain) {
                 Route::middleware('web')
                     ->domain($domain)
                     ->group(base_path('routes/web.php'));
             }
         },
         // web: __DIR__.'/../routes/web.php',
+        api: __DIR__ . '/../routes/api.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->appendToGroup('web',[
+        $middleware->validateCsrfTokens(except: [
+            'stripe/*',
+            'livewire/*',
+        ]);
+        $middleware->appendToGroup('web', [
             StartSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class
@@ -47,11 +58,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => Authenticate::class,
             'auth.basic' => AuthenticateWithBasicAuth::class,
             'auth.session' => AuthenticateSession::class,
-            'cache.headers'=> SetCacheHeaders::class,
-            'can'=> Authorize::class,
-            'guest'=> RedirectIfAuthenticated::class,
-            'password.confirm'=> RequirePassword::class,
-            'verified'=> EnsureEmailIsVerified::class
+            'cache.headers' => SetCacheHeaders::class,
+            'can' => Authorize::class,
+            'guest' => RedirectIfAuthenticated::class,
+            'password.confirm' => RequirePassword::class,
+            'verified' => EnsureEmailIsVerified::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

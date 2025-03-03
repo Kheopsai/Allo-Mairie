@@ -49,6 +49,7 @@
         </div>
         <div class="w-full space-y-4 max-w-8xl">
             <div class="grid gap-4 md:grid-cols-3">
+                @can('create',App\Models\Hub::class)
                 <div wire:click="add()"
                      class="flex items-center p-8 text-sm text-center border border-dashed cursor-pointer border-secondary-400 rounded-xl">
                     <div>
@@ -58,8 +59,9 @@
                         <div>
                             {{ __('Create directory to organize your documents efficiently.') }}
                         </div>
-                    </div>
+                    </div> hozal@mailinator.com
                 </div>
+                @endcan
                 @foreach ($hubs as $hub)
                     <div class=relative>
                         <div class="absolute right-0 p-6 flex justify-end z-10 items-center">

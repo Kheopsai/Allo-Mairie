@@ -79,6 +79,7 @@
                                 {{ __('Remove file') }}
                             </div>
                         @else
+                                <x-atoms.file-uploader wire:model.live="file" />
                             <label for="dropzone-file"
                                    class="p-4 cursor-pointer hover:bg-secondary-50 flex justify-center items-center rounded-lg border border-dashed flex-1">
                                 <div class="flex space-x-2">
@@ -90,7 +91,7 @@
                                         {{ __('Select file to upload') }}
                                     </div>
                                 </div>
-                                <input id="dropzone-file" type="file" class="hidden" wire:model.live="file"/>
+                                {{-- <input id="dropzone-file" type="file" class="hidden" wire:model.live="file"/> --}}
                             </label>
                         @endif
                     </div>

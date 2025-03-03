@@ -7,11 +7,12 @@
             </x-atoms.forms.input-field>
 
             <x-atoms.forms.input-field title="Institution Type" description="Select the type of institution from the available options.">
-                <x-select sm placeholder='{{ __("Institution of company") }}' wire:model.live="type">
+                <select :options="$"  sm placeholder='{{ __("Institution of company") }}' wire:model.live="type">
                     @foreach($governmentInstitutions as $governmentInstitution)
-                        <x-select.option value="{{ $governmentInstitution }}">{{ __($governmentInstitution) }}</x-select.option>
+                        <option value="{{ $governmentInstitution }}">{{ __($governmentInstitution) }}</option>
+
                     @endforeach
-                </x-select>
+                </select>
             </x-atoms.forms.input-field>
 
             <x-atoms.forms.input-field title="Create a new User" description="Add a new user to the company with the necessary details for access and management.">
