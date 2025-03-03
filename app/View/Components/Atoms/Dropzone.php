@@ -42,7 +42,6 @@ class Dropzone extends Component
 
     public function mount(array $rules = [], bool $multiple = false): void
     {
-        ds($this->files);
         $this->uuid = Str::uuid();
         $this->multiple = $multiple;
         $this->rules = $rules;
