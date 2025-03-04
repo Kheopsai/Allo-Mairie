@@ -59,7 +59,7 @@
                         <div>
                             {{ __('Create directory to organize your documents efficiently.') }}
                         </div>
-                    </div> hozal@mailinator.com
+                    </div>
                 </div>
                 @endcan
                 @foreach ($hubs as $hub)

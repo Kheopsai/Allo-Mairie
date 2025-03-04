@@ -16,14 +16,15 @@
 
     <link rel="shortcut icon" href="{{ url(global_asset('images/svg/logo.svg')) }}">
 
-    <wireui:scripts/>
+    <tallstackui:script />
+    <wireui:scripts />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body class="antialiased tracking-tight">
-    <x-dialog z-index="z-50"/>
-    <x-notifications z-index="z-50"/>
+    <x-dialog z-index="z-50" />
+    <x-notifications z-index="z-50" />
     @yield('body')
     @livewire('wire-elements-modal')
 

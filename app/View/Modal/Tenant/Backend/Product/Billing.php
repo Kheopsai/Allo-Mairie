@@ -61,7 +61,7 @@ class Billing extends ModalComponent
         $this->forceCloseModal();
         $this->notification()->success(
             $title = trans('Action saved'),
-            $description = trans('Your action was successfully saved')
+            $description = trans('Your request was sent to the admin')
         );
     }
 

@@ -39,6 +39,7 @@
         "staudenmeir/eloquent-has-many-deep": "^1.20",
         "stripe/stripe-php": "^16.5",
         "symfony/dom-crawler": "^7.2",
+        "tallstackui/tallstackui": "^2.0.0",
         "thiagoalessio/tesseract_ocr": "^2.13",
         "wire-elements/modal": "^2.0",
         "wireui/wireui": "^2.2"

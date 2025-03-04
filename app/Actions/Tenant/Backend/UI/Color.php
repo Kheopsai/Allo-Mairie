@@ -17,8 +17,8 @@ class Color
             if ($setting) {
                 return response()->json(['primaryColor' => $setting->primary_color]);
             }
-            return response()->json(['primaryColor' => '#8b5cf6']);
+            return response()->json(['primaryColor' => '#1091e7']);
         }
-        return response()->json(['primaryColor' => '#8b5cf6']);
+        return response()->json(['primaryColor' => '#1091e7']);
     }
 }

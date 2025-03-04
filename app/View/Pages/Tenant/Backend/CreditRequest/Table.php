@@ -8,10 +8,24 @@ use App\Models\CreditRequest;
 use App\Models\Product;
 use App\Models\SyncedUser;
 use App\Services\Tokens\CreditService;
+use App\Traits\HasActionResource;
+use WireUi\Traits\WireUiActions;
 
 class Table extends DataTableComponent
 {
+
+    use HasActionResource;
+    use WireUiActions;
+
     protected $model = CreditRequest::class;
+
+    public function actions():array
+    {
+        $actions = [
+            auth()->user()->hasPermission('creditRequest-delete') ? $this->getDefaultDeleteAction():null
+        ];
+        return array_filter($actions);
+    }
 
     public function configure(): void
     {
@@ -22,7 +36,7 @@ class Table extends DataTableComponent
     {
 
         $this->authorize('update',$creditRequest);
-        tenant()->checkout();
+        // tenant()->checkout();
         $credit= new CreditService;
         $credit->addCredits(SyncedUser::find($creditRequest['user_id']),Product::find($creditRequest['product_id'])->value);
         $creditRequest->update(['validated_at'=> now()]);

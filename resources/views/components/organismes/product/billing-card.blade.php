@@ -7,7 +7,7 @@
     </div>
     <h3 class="font-heading font-bold sm:text-6xl text-7xl text-gray-900">{{ $product->value . __(' credits')}}</h3>
     <p class="mb-12 text-gray-500">{{ $product->price ."€" }} </p>
-    <x-button label="{{ __('Buy') }}" primary rounded-md md  wire:click="save({{ $product->id }})"/>
+    <x-button label="{{ __('Request') }}" primary rounded-md md  wire:click="save({{ $product->id }})"/>
 </div>
 {{-- <div
     class="box-border px-4 py-8 mb-6 text-center bg-white border-solid lg:mb-0 sm:px-4 sm:py-8 md:px-8 md:py-12 lg:px-10">

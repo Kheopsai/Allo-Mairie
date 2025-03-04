@@ -64,12 +64,12 @@ class Create extends ModalComponent
 
                     $user->metropoles()->attach($company);
 
-                    $user->addRole($this->role);
 
                     $attributes = $user->getAttributes();
 
                     tenancy()->initialize($tenant);
-                    SyncedUser::create($attributes);
+                    $user =SyncedUser::create($attributes);
+                    $user->addRole($this->role);
                 });
             });
 

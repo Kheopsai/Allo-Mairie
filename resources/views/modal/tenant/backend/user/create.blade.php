@@ -13,11 +13,11 @@
             <x-input label="{{ __('Email address') }}" type="email" wire:model.live="email" />
         </div>
         <div>
-                        <x-select sm label='{{ __("Role") }}' placeholder='{{ __("Choose a role for the user") }}' wire:model.live="role" :options="['user','pro']">
-                            @foreach($this->roles as $role)
+                        <x-ts-select.styled sm label='{{ __("Role") }}' placeholder='{{ __("Choose a role for the user") }}' wire:model.live="role" :options="$this->roles" select="label:name|value:name" />
+                            {{-- @foreach($this->roles as $role)
                                 <x-select.option value="{{ $role->name }}">{{ __($role->name) }}</x-select.option>
-                            @endforeach
-                        </x-select>
+                            @endforeach --}}
+                        {{-- </x-ts-select.styled> --}}
         </div>
         <div>
             <x-password label="{{ __('Password') }}"  wire:model.live="password" />
