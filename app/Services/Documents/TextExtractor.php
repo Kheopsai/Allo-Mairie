@@ -42,7 +42,6 @@ class TextExtractor
     public function countPages(string $input): bool|string|array
     {
         [$content, $extension] = $this->determineContent($input);
-
         return match ($extension) {
             ExtensionEnum::TXT => (new TxtLoader)->countPages($content),
             ExtensionEnum::PDF => (new PdfLoader)->countPages($content),

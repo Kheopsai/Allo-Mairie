@@ -7,10 +7,10 @@ use App\Models\Permission;
 use App\Models\Role;
 use Livewire\WithPagination;
 use App\Helpers\CollectionPaginator;
-use WireUi\Traits\WireUiActions;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use WireUi\Traits\WireUiActions;
 
 class Index extends Component
 {

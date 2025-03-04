@@ -21,19 +21,21 @@ class Table extends DataTableComponent
 
     public function actions(): array
     {
-        return [
+        $actions= [
             // [
             //     'label' => trans('Edit'),
             //     'icon' => 'pencil',
             //     'action' => 'edit',
             // ],
-            [
-                'label' => trans('Delete'),
-                'icon' => 'trash',
-                'action' => 'deleteConfirmation',
-            ],
+        auth()->user()->hasPermission('source-delete') ? $this->getDefaultDeleteAction():null
+            // [
+            //     'label' => trans('Delete'),
+            //     'icon' => 'trash',
+            //     'action' => 'deleteConfirmation',
+            // ],
 
         ];
+        return array_filter($actions);
     }
 
     public function configure(): void
@@ -61,6 +63,7 @@ class Table extends DataTableComponent
 
     public function add()
     {
+        $this->authorize('create',Source::class);
         $this->dispatch('openModal','modal.tenant.backend.source.create',['hub'=> $this->hub]);
     }
 

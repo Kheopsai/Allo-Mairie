@@ -59,7 +59,7 @@
         <div {{ $attributes->merge(['class' => "flex flex-col items-center bg-white justify-center p-8 rounded-xl border border-dashed border-secondary-200 transition-colors duration-300"]) }}>
             <div class="flex flex-col items-center justify-center">
                 <div class="p-3 bg-primary-50 rounded-full border border-primary-100">
-                    <x-kheops-upload class="h-6 w-6 text-primary-500"/>
+                    {{-- <x-kheops-upload class="h-6 w-6 text-primary-500"/> --}}
                 </div>
                 <p class="mt-6 text-dark-1 dark:text-white text-center text-sm">
                     {{ __('Drag & drop your documents here') }}

@@ -29,6 +29,9 @@ class Table extends DataTableComponent
                 ->sortable(),
             Column::make(trans("Email"), "email")
                 ->sortable(),
+            Column::make(trans("Full name"), "id")
+                ->format(fn($id)=> User::find($id)->full_name)
+                ->sortable(),
             Column::make(trans("Created at"), "created_at")
                 ->sortable(),
             Column::make(trans("Updated at"), "updated_at")

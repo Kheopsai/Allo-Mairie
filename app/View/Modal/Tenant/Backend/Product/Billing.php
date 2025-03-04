@@ -2,6 +2,8 @@
 
 namespace App\View\Modal\Tenant\Backend\Product;
 
+use App\Enums\RoleEnum;
+use App\Models\CreditRequest;
 use App\Models\Product;
 use App\Services\Tokens\CreditService;
 use LivewireUI\Modal\ModalComponent;
@@ -43,8 +45,19 @@ class Billing extends ModalComponent
 
     public function save($product_id)
     {
+        if(auth()->user()->hasRole(RoleEnum::Admin))
+        {
         $credit= new CreditService;
         $credit->addCredits(auth()->user(),Product::find($product_id)->value);
+        }
+        else{
+
+            $this->authorize('create',CreditRequest::class);
+        CreditRequest::create([
+            'user_id'=> auth()->id(),
+            'product_id'=> $product_id
+        ]);
+        }
         $this->forceCloseModal();
         $this->notification()->success(
             $title = trans('Action saved'),

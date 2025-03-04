@@ -72,14 +72,14 @@
             @if ($value == 'file')
                 <div>
                     <div class="cursor-pointer justify-center flex flex-col space-x-2 text-center w-full">
-                        @if ($file)
+                                <x-atoms.file-uploader wire:model.live="file" accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                        {{-- @if ($file)
                             <div
                                 class="p-4 cursor-pointer hover:bg-secondary-50 text-center flex justify-center items-center rounded-lg border border-dashed flex-1"
                                 wire:click="removeFile()" wire:loading.remove wire:target="file">
                                 {{ __('Remove file') }}
                             </div>
                         @else
-                                <x-atoms.file-uploader wire:model.live="file" />
                             <label for="dropzone-file"
                                    class="p-4 cursor-pointer hover:bg-secondary-50 flex justify-center items-center rounded-lg border border-dashed flex-1">
                                 <div class="flex space-x-2">
@@ -91,9 +91,9 @@
                                         {{ __('Select file to upload') }}
                                     </div>
                                 </div>
-                                {{-- <input id="dropzone-file" type="file" class="hidden" wire:model.live="file"/> --}}
+                                <input id="dropzone-file" type="file" class="hidden" wire:model.live="file"/>
                             </label>
-                        @endif
+                        @endif --}}
                     </div>
                     <x-atoms.error name="file"/>
                 </div>

@@ -32,7 +32,7 @@ class Create extends ModalComponent
     public $password;
 
     #[Rule('required')]
-    public $role;
+    public $role= RoleEnum::User;
 
     #[Computed]
     public function roles()

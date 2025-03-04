@@ -16,8 +16,11 @@ use App\Services\Documents\TextExtractor;
 use App\Services\Extractors\SummaryExtractor;
 use AssistedMindfulness\Rake\Rake;
 use Exception;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -100,7 +103,7 @@ class Create extends ModalComponent
      */
     public function updatedFile(): void
     {
-        $this->validateFile();
+        // $this->validateFile();
     }
 
     public function loadContent(): void
@@ -109,18 +112,34 @@ class Create extends ModalComponent
     }
 
 
-    public function validateFile(): void
+    public function validateFile($file): void
     {
-        if ($this->value=="file") {
-            $this->validate([
-                'file' => ['required', 'file', "mimes:pdf,doc,docx,txt,pptx,xls,xlsx"],
-            ]);
+        $validator = Validator::make(
+            ['file' => $file],
+            [
+                'file' => [
+                    'required',
+                    'file',
+                    'mimes:pdf,doc,docx,txt,pptx,xls,xlsx',
+                ],
+            ]
+        );
+
+        if ($validator->fails()) {
+            foreach ($validator->errors()->all() as $error) {
+                $this->addError('file', $error);
+            }
         }
+        // if ($this->value == "file") {
+        //     $this->validate([
+        //         'file' => ['required', 'file', "mimes:pdf,doc,docx,txt,pptx,xls,xlsx"],
+        //     ]);
+        // }
     }
-    public function validateUrl():void
+    public function validateUrl(): void
     {
-        if($this->value=="url"){
-            $this->validate(['url'=>'required|url']);
+        if ($this->value == "url") {
+            $this->validate(['url' => 'required|url']);
         }
     }
 
@@ -128,6 +147,17 @@ class Create extends ModalComponent
     public function estimateTokenCount($text): float
     {
         return ceil(strlen($text) / 2);
+    }
+
+    public function temporaryFile(): UploadedFile
+    {
+        return new UploadedFile(
+            $this->file,
+            File::name($this->file),
+            File::mimeType($this->file),
+            null,
+            true
+        );
     }
 
 
@@ -145,8 +175,12 @@ class Create extends ModalComponent
     public function save(): void
     {
         $this->validate();
+        if ($this->value == 'file') {
+            $file= $this->temporaryFile();
+            $this->validateFile($file);
+        }
+
         $this->validateUrl();
-        $this->validateFile();
         $source = new Source();
         $source->name = $this->name;
         $source->content = $this->content;
@@ -158,8 +192,8 @@ class Create extends ModalComponent
         $source->syncTags($this->tags);
         switch ($this->value) {
             case 'file':
-                $this->file = $this->file->getRealPath();
-                $this->addToRessources($source);
+                // $this->file = $this->file->getRealPath();
+                $this->addToRessources($source,$file->path());
                 break;
             case 'text':
                 ContentProcessEvent::dispatch($source->id, tenant()->id, $this->content, Auth::id());
@@ -176,9 +210,10 @@ class Create extends ModalComponent
         );
     }
 
-    public function addToRessources($source): void
+    public function addToRessources($source,$file): void
     {
-        $source->addFile($this->file)->in('tmp')->on('local')->save();
+        $source->addFile($file)->in('tmp')->on('local')->save();
+        // ds($source->file);
         DocumentProcessEvent::dispatch(tenant(), $source, Auth::id());
     }
 

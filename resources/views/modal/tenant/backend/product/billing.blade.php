@@ -13,10 +13,10 @@
                 We've got a plan for companies of any size
             </p>
         </div> --}}
-            @empty($products)
+            @if($products->isEmpty())
 
                 <h2
-                    class="box-border m-0 text-3xl font-semibold leading-tight tracking-tight text-black border-solid sm:text-4xl md:text-5xl">
+                    class="box-border m-0 text-xl font-semibold leading-tight tracking-tight text-black border-solid  ">
                     {{ __('No Products available for the moment') }}
                 </h2>
             @else

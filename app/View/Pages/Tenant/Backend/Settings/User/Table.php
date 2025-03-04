@@ -92,6 +92,9 @@ class Table extends DataTableComponent
                 ->sortable(),
             Column::make(trans('Email'), 'email')
                 ->sortable(),
+            Column::make(trans('Role'), 'id')
+                ->format(fn ($value) => SyncedUser::find($value)->roles->first()->name ?? '/')
+                ->sortable(),
             Column::make('Created at', 'created_at')
                 ->sortable(),
             // ComponentColumn::make(trans('Actions'), 'id')

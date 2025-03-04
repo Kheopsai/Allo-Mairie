@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     'central' => [
@@ -14,7 +15,7 @@ return [
             [
                 'label' => 'Companies',
                 'icon' => 'building-office-2',
-                'route' => 'metropole.index'
+                'route' => 'metropole.index',
             ],
             [
                 'label' => 'Users',
@@ -86,7 +87,15 @@ return [
             [
                 'label' => 'DataBase',
                 'icon' => 'circle-stack',
-                'route' => 'hub.index'
+                'route' => 'hub.index',
+            ]
+        ],
+
+        'Credits' => [
+            [
+                'label' => 'Credits requests',
+                'icon' => 'currency-dollar',
+                'route' => 'creditRequest.index'
             ]
         ],
 

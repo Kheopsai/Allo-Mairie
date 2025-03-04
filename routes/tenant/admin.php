@@ -19,4 +19,8 @@ Route::namespace('Backend')->middleware(['auth:tenant'])->group(function (){
     Route::namespace('Settings')->prefix('settings')->as('settings.')->group(function(){
         Route::get('',Index::class)->name('index');
     } );
+
+    Route::namespace('CreditRequest')->prefix('creditRequest')->as('creditRequest.')->group(function(){
+        Route::get('',Index::class)->name('index')->middleware('can:viewAny,App\Models\CreditRequest');
+    } );
 });

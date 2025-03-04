@@ -115,4 +115,9 @@ class SyncedUser extends Authenticatable implements LaratrustUser, Syncable, Has
     {
         return $this->hasOne(Credit::class, 'user_id', 'id');
     }
+
+    public function creditRequests():HasMany
+    {
+        return $this->hasMany(CreditRequest::class);
+    }
 }

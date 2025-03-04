@@ -6059,16 +6059,16 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "4.0.0",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "2d4b9f3582102aafb6b1378fff8a20eeeacfb31c"
+                "reference": "6ff18c3a8df3a945492f75ce455d77f7ad55dd5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/2d4b9f3582102aafb6b1378fff8a20eeeacfb31c",
-                "reference": "2d4b9f3582102aafb6b1378fff8a20eeeacfb31c",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/6ff18c3a8df3a945492f75ce455d77f7ad55dd5c",
+                "reference": "6ff18c3a8df3a945492f75ce455d77f7ad55dd5c",
                 "shasum": ""
             },
             "require": {
@@ -6158,9 +6158,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/4.0.0"
+                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/4.1.0"
             },
-            "time": "2025-02-08T02:28:25+00:00"
+            "time": "2025-03-02T06:52:24+00:00"
         },
         {
             "name": "phpoffice/phpword",
@@ -6991,16 +6991,16 @@
         },
         {
             "name": "ramsey/collection",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/collection.git",
-                "reference": "a4b48764bfbb8f3a6a4d1aeb1a35bb5e9ecac4a5"
+                "reference": "3c5990b8a5e0b79cd1cf11c2dc1229e58e93f109"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/collection/zipball/a4b48764bfbb8f3a6a4d1aeb1a35bb5e9ecac4a5",
-                "reference": "a4b48764bfbb8f3a6a4d1aeb1a35bb5e9ecac4a5",
+                "url": "https://api.github.com/repos/ramsey/collection/zipball/3c5990b8a5e0b79cd1cf11c2dc1229e58e93f109",
+                "reference": "3c5990b8a5e0b79cd1cf11c2dc1229e58e93f109",
                 "shasum": ""
             },
             "require": {
@@ -7008,25 +7008,22 @@
             },
             "require-dev": {
                 "captainhook/plugin-composer": "^5.3",
-                "ergebnis/composer-normalize": "^2.28.3",
-                "fakerphp/faker": "^1.21",
+                "ergebnis/composer-normalize": "^2.45",
+                "fakerphp/faker": "^1.24",
                 "hamcrest/hamcrest-php": "^2.0",
-                "jangregor/phpstan-prophecy": "^1.0",
-                "mockery/mockery": "^1.5",
+                "jangregor/phpstan-prophecy": "^2.1",
+                "mockery/mockery": "^1.6",
                 "php-parallel-lint/php-console-highlighter": "^1.0",
-                "php-parallel-lint/php-parallel-lint": "^1.3",
-                "phpcsstandards/phpcsutils": "^1.0.0-rc1",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/extension-installer": "^1.2",
-                "phpstan/phpstan": "^1.9",
-                "phpstan/phpstan-mockery": "^1.1",
-                "phpstan/phpstan-phpunit": "^1.3",
-                "phpunit/phpunit": "^9.5",
-                "psalm/plugin-mockery": "^1.1",
-                "psalm/plugin-phpunit": "^0.18.4",
-                "ramsey/coding-standard": "^2.0.3",
-                "ramsey/conventional-commits": "^1.3",
-                "vimeo/psalm": "^5.4"
+                "php-parallel-lint/php-parallel-lint": "^1.4",
+                "phpspec/prophecy-phpunit": "^2.3",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-mockery": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpunit/phpunit": "^10.5",
+                "ramsey/coding-standard": "^2.3",
+                "ramsey/conventional-commits": "^1.6",
+                "roave/security-advisories": "dev-latest"
             },
             "type": "library",
             "extra": {
@@ -7064,19 +7061,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/collection/issues",
-                "source": "https://github.com/ramsey/collection/tree/2.0.0"
+                "source": "https://github.com/ramsey/collection/tree/2.1.0"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/ramsey",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/ramsey/collection",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-12-31T21:50:55+00:00"
+            "time": "2025-03-02T04:48:29+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -7818,16 +7805,16 @@
         },
         {
             "name": "spatie/laravel-data",
-            "version": "4.13.1",
+            "version": "4.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-data.git",
-                "reference": "14252330397cf84647cc086324ea1a30dbe5f7cc"
+                "reference": "bd060f6d47ad4a3fac1f92162d76bfd9975b10ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/14252330397cf84647cc086324ea1a30dbe5f7cc",
-                "reference": "14252330397cf84647cc086324ea1a30dbe5f7cc",
+                "url": "https://api.github.com/repos/spatie/laravel-data/zipball/bd060f6d47ad4a3fac1f92162d76bfd9975b10ca",
+                "reference": "bd060f6d47ad4a3fac1f92162d76bfd9975b10ca",
                 "shasum": ""
             },
             "require": {
@@ -7888,7 +7875,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-data/issues",
-                "source": "https://github.com/spatie/laravel-data/tree/4.13.1"
+                "source": "https://github.com/spatie/laravel-data/tree/4.13.2"
             },
             "funding": [
                 {
@@ -7896,7 +7883,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-14T14:29:16+00:00"
+            "time": "2025-03-03T09:59:10+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -11741,27 +11728,26 @@
         },
         {
             "name": "wireui/heroicons",
-            "version": "v2.8.0",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wireui/heroicons.git",
-                "reference": "48aad6f427eeadf046d1ad3abf2b7c464b98bdf4"
+                "reference": "ccd2ab94293d6f231271c0847c1db34305313c6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wireui/heroicons/zipball/48aad6f427eeadf046d1ad3abf2b7c464b98bdf4",
-                "reference": "48aad6f427eeadf046d1ad3abf2b7c464b98bdf4",
+                "url": "https://api.github.com/repos/wireui/heroicons/zipball/ccd2ab94293d6f231271c0847c1db34305313c6f",
+                "reference": "ccd2ab94293d6f231271c0847c1db34305313c6f",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^9.16|^10.0|^11.0",
+                "laravel/framework": "^9.16|^10.0|^11.0|^12.0",
                 "php": "^8.1|^8.2|^8.3|^8.4"
             },
             "require-dev": {
-                "larastan/larastan": "^2.9",
+                "larastan/larastan": "^3.0",
                 "laravel/pint": "^1.6",
-                "mockery/mockery": "^1.5",
-                "orchestra/testbench": "^7.7|^8.0|^9.0",
+                "orchestra/testbench": "^10.0",
                 "pestphp/pest": "^3.0"
             },
             "type": "library",
@@ -11799,40 +11785,37 @@
             ],
             "support": {
                 "issues": "https://github.com/wireui/heroicons/issues",
-                "source": "https://github.com/wireui/heroicons/tree/v2.8.0"
+                "source": "https://github.com/wireui/heroicons/tree/v2.9.0"
             },
-            "time": "2025-01-04T22:01:11+00:00"
+            "time": "2025-03-02T22:06:22+00:00"
         },
         {
             "name": "wireui/wireui",
-            "version": "v2.2.2",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wireui/wireui.git",
-                "reference": "ae6a1cec8a0eb8027dec3c6868d1f5d7ef3495ad"
+                "reference": "8f2e48638efa66433b4592c455ec553bf4d9c75b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wireui/wireui/zipball/ae6a1cec8a0eb8027dec3c6868d1f5d7ef3495ad",
-                "reference": "ae6a1cec8a0eb8027dec3c6868d1f5d7ef3495ad",
+                "url": "https://api.github.com/repos/wireui/wireui/zipball/8f2e48638efa66433b4592c455ec553bf4d9c75b",
+                "reference": "8f2e48638efa66433b4592c455ec553bf4d9c75b",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^10.0|^11.0",
+                "laravel/framework": "^10.0|^11.0|^12.0",
                 "php": "^8.2|^8.3|^8.4",
-                "wireui/heroicons": "^2.6"
+                "wireui/heroicons": "^2.8"
             },
             "require-dev": {
-                "laravel/pint": "^1.16",
-                "livewire/livewire": "^3.5",
-                "mockery/mockery": "^1.6",
-                "orchestra/testbench": "^8.14|^9.0",
-                "orchestra/testbench-dusk": "^8.14|^9.0",
-                "pestphp/pest": "^2.34",
-                "pestphp/pest-plugin-laravel": "^2.4",
-                "pestphp/pest-plugin-livewire": "^2.1",
-                "phpunit/phpunit": "^10.5",
-                "psy/psysh": "^0.12.3"
+                "laravel/pint": "^1.19",
+                "livewire/livewire": "^3.6",
+                "orchestra/testbench": "^10.0",
+                "orchestra/testbench-dusk": "^10.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "pestphp/pest-plugin-livewire": "^3.0"
             },
             "type": "library",
             "extra": {
@@ -11855,7 +11838,7 @@
             "authors": [
                 {
                     "name": "Pedro Oliveira",
-                    "email": "pedro@wireui.dev"
+                    "email": "pedrolivertwd@gmail.com"
                 }
             ],
             "description": "TallStack components",
@@ -11868,9 +11851,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wireui/wireui/issues",
-                "source": "https://github.com/wireui/wireui/tree/v2.2.2"
+                "source": "https://github.com/wireui/wireui/tree/v2.3.0"
             },
-            "time": "2025-01-05T02:50:06+00:00"
+            "time": "2025-03-03T00:36:31+00:00"
         }
     ],
     "packages-dev": [
